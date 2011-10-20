@@ -1,0 +1,133 @@
+# French translations for PACKAGE package
+# Traductions françaises du paquet PACKAGE.
+# Copyright (C) 2008 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Aaron Small <a.small@unb.ca>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-09-20 14:51-0400\n"
+"Last-Translator: Aaron Small <a.small@unb.ca>\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/GtkUtil.cc:60
+#, c-format
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
+"closing?</span>\n"
+"\n"
+"If you close without saving, your changes will be discarded."
+msgstr ""
+
+#: src/GtkUtil.cc:66
+msgid "Close _without saving"
+msgstr "_Fermer sans enregister"
+
+#: src/GtkPoint2D.cc:19 src/GtkFlag.cc:32 src/GtkColor.cc:47
+#: src/GtkDistance.cc:34 src/GtkBearing.cc:36 src/GtkLabel.cc:33
+#: src/GtkView.cc:104 src/GtkFont.cc:30
+msgid ""
+"The binding could not be set. It overconstrains an object in the diagram."
+msgstr ""
+
+#: src/GtkFlag.cc:18
+msgid "Is this line visible?"
+msgstr ""
+
+#: src/GtkColor.cc:29
+msgid "Select color"
+msgstr ""
+
+#: src/GtkDistance.cc:15 src/GtkDistance.cc:21
+msgid "Please enter distance"
+msgstr ""
+
+#: src/GtkBearing.cc:17 src/GtkBearing.cc:23
+msgid "Please enter bearing"
+msgstr ""
+
+#: src/GtkLabel.cc:15 src/GtkLabel.cc:20
+msgid "Please enter text"
+msgstr ""
+
+#: src/GtkView.cc:136
+msgid ""
+"This value was calculated from other values, you cannot remove it directly. "
+"You must remove the values it was derived from."
+msgstr ""
+
+#: src/GtkView.cc:174
+msgid ""
+"This value was calculated from other values, you cannot set it directly. You "
+"must remove the values it was derived from before setting it."
+msgstr ""
+
+#: src/GtkView.cc:334
+msgid "Please click on the canvas to select a point"
+msgstr ""
+
+#: src/GtkView.cc:363
+msgid "Please enter tool name"
+msgstr ""
+
+#: src/GtkView.cc:716
+msgid "Main window"
+msgstr ""
+
+#: src/GtkView.cc:726
+msgid "_File"
+msgstr ""
+
+#: src/GtkView.cc:733
+msgid "New _Document"
+msgstr ""
+
+#: src/GtkView.cc:737
+msgid "New _View"
+msgstr ""
+
+#: src/GtkView.cc:745
+msgid "Save _Tool"
+msgstr ""
+
+#: src/GtkView.cc:757
+msgid "_Edit"
+msgstr ""
+
+#: src/GtkView.cc:780
+msgid "_View"
+msgstr ""
+
+#: src/GtkView.cc:787
+msgid "_Help"
+msgstr ""
+
+#: src/GtkView.cc:794
+msgid "_About"
+msgstr ""
+
+#: src/GtkView.cc:872
+msgid "Name"
+msgstr ""
+
+#: src/GtkView.cc:880
+msgid "Value"
+msgstr ""
+
+#: src/GtkView.cc:889
+msgid "Sets Value"
+msgstr ""
+
+#: src/GtkView.cc:898
+msgid "Bind to selection"
+msgstr ""
+
+#: src/GtkFont.cc:16
+msgid "Please choose font"
+msgstr ""

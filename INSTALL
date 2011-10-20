@@ -1,0 +1,3 @@
+To install Primtive Diagrammer, first build the project. We use scons as our
+build tool, which can be invoked by typing 'scons' in the directory where this
+file is located. Once you have successfully built the project, type 'scons install' to install it.

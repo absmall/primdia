@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<tool xmlns="http://leonardo.math.unb.ca/primdiag"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://leonardo.math.unb.ca/primdiag tool.xsd"
+description="Create a point">
+	<nodes>
+		<node name="N" type="PointPrimitive"/>
+	</nodes>
+	<bindings>
+		<binding type="Distance" interface="Radius" value="1.0">
+			<member node="N" attribute="Radius"/>
+		</binding>
+		<binding type="2D Point" interface="Point">
+			<member node="N" attribute="Point"/>
+		</binding>
+		<binding type="Color" interface="Color" value="#000000FF">
+			<member node="N" attribute="Color"/>
+		</binding>
+	</bindings>
+</tool>

@@ -1,0 +1,39 @@
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/apps/primdiag/canvaswidth</key>
+			<applyto>/apps/primdiag/canvaswidth</applyto>
+			<owner>primdiag</owner>
+			<type>int</type>
+			<locale name="C">
+				<default>80</default>
+				<short>Width of the canvas</short>
+				<long>What percentage of the width of the main window should be occupied by the canvas.</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/primdiag/width</key>
+			<applyto>/apps/primdiag/width</applyto>
+			<owner>primdiag</owner>
+			<type>int</type>
+			<locale name="C">
+				<default>400</default>
+				<short>Width of the application at startup</short>
+				<long>When a new document window is opened, how wide should it be?</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/primdiag/height</key>
+			<applyto>/apps/primdiag/height</applyto>
+			<owner>primdiag</owner>
+			<type>int</type>
+			<locale name="C">
+				<default>200</default>
+				<short>Height of the application at startup</short>
+				<long>When a new document window is opened, how high should it be?</long>
+			</locale>
+		</schema>
+	</schemalist>
+</gconfschemafile>

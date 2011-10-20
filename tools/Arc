@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<tool xmlns="http://leonardo.math.unb.ca/primdiag"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://leonardo.math.unb.ca/primdiag tool.xsd"
+description="Create an Arc">
+	<nodes>
+		<node name="A" type="ArcPrimitive"/>
+	</nodes>
+	<bindings>
+		<binding type="2D Point" interface="Point">
+			<member node="A" attribute="Point"/>
+		</binding>
+                <binding type="Distance" interface="Radius">
+        	        <member node="A" attribute="Radius"/>
+                </binding>
+                <binding type="Bearing" interface="Angle 1">
+                        <member node="A" attribute="Angle 1"/>
+                </binding>
+                <binding type="Bearing" interface="Angle 2">
+                        <member node="A" attribute="Angle 2"/>
+                </binding>
+		<binding type="Distance" interface="Width" value="1">
+			<member node="A" attribute="Width"/>
+		</binding>
+		<binding type="Color" interface="Color" value="#000000FF">
+			<member node="A" attribute="Color"/>
+		</binding>
+	</bindings>
+</tool>

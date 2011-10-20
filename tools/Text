@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<tool xmlns="http://leonardo.math.unb.ca/primdiag"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://leonardo.math.unb.ca/primdiag tool.xsd"
+description="Create a text string">
+	<nodes>
+		<node name="T" type="TextPrimitive"/>
+	</nodes>
+	<bindings>
+		<binding type="2D Point" interface="Top Left">
+			<member node="T" attribute="Top Left"/>
+		</binding>
+		<binding type="2D Point" interface="Top Right">
+			<member node="T" attribute="Top Right"/>
+		</binding>
+		<binding type="2D Point" interface="Bottom Left">
+			<member node="T" attribute="Bottom Left"/>
+		</binding>
+		<binding type="2D Point" interface="Bottom Right">
+			<member node="T" attribute="Bottom Right"/>
+		</binding>
+		<binding type="Text" interface="Text">
+			<member node="T" attribute="Text"/>
+		</binding>
+		<binding type="Font" interface="Font" value="monospace 12">
+			<member node="T" attribute="Font"/>
+		</binding>
+	</bindings>
+</tool>

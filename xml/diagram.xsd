@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://leonardo.math.unb.ca/primdiag/diagram"
+xmlns="http://leonardo.math.unb.ca/primdiag/diagram"
+elementFormDefault="qualified">
+	<xs:element name="diagram">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="interfaces">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:choice minOccurs="0" maxOccurs="unbounded">
+								<xs:element name="interface">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:choice minOccurs="1" maxOccurs="unbounded">
+												<xs:element name="node">
+													<xs:complexType>
+														<xs:attribute name="name" type="xs:string" use="required" />
+														<xs:attribute name="type" type="xs:string" use="required" />
+													</xs:complexType>
+												</xs:element>
+											</xs:choice>
+										</xs:sequence>
+										<xs:attribute name="name" type="xs:string" use="required" />
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="bindings">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:choice minOccurs="0" maxOccurs="unbounded">
+								<xs:element name="binding">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:choice minOccurs="1" maxOccurs="unbounded">
+												<xs:element name="member">
+													<xs:complexType>
+														<xs:attribute name="node" type="xs:string" use="required" />
+														<xs:attribute name="attribute" type="xs:string" use="required" />
+													</xs:complexType>
+												</xs:element>
+											</xs:choice>
+										</xs:sequence>
+										<xs:attribute name="type" type="xs:string" use="required" />
+										<xs:attribute name="interface" type="xs:string" use="optional" />
+										<xs:attribute name="value" type="xs:string" use="optional" />
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

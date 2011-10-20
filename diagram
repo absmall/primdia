@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<diagram xmlns="http://leonardo.math.unb.ca/primdiag/diagram">
+  <interfaces>
+    <interface name="Line">
+      <node name="282138579" type="LinePrimitive"/>
+    </interface>
+    <interface name="Line">
+      <node name="223910841" type="LinePrimitive"/>
+    </interface>
+  </interfaces>
+  <bindings>
+    <binding type="Color" value="#000000FF">
+      <member node="282138579" attribute="Color"/>
+    </binding>
+    <binding type="Color" value="#000000FF">
+      <member node="223910841" attribute="Color"/>
+    </binding>
+    <binding type="Distance">
+      <member node="282138579" attribute="Length"/>
+    </binding>
+    <binding type="2D Point" value="(6, 29)">
+      <member node="223910841" attribute="Point 2"/>
+    </binding>
+    <binding type="Distance" value="1">
+      <member node="223910841" attribute="Width"/>
+    </binding>
+    <binding type="Distance">
+      <member node="223910841" attribute="Length"/>
+    </binding>
+    <binding type="2D Point" value="(-127, 8)">
+      <member node="223910841" attribute="Point 1"/>
+      <member node="282138579" attribute="Point 1"/>
+    </binding>
+    <binding type="Distance" value="1">
+      <member node="282138579" attribute="Width"/>
+    </binding>
+    <binding type="Bearing">
+      <member node="282138579" attribute="Slope"/>
+    </binding>
+    <binding type="Bearing">
+      <member node="223910841" attribute="Slope"/>
+    </binding>
+    <binding type="2D Point">
+      <member node="282138579" attribute="Point 2"/>
+    </binding>
+  </bindings>
+</diagram>

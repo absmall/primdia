@@ -1,0 +1,22 @@
+To do list:
+-----------
+
+[Tool]-When creating a new tool, a better user interface is necessary. It's not sufficient to specify the tool. The user must also be able to specify names for each binding in the interface.
+
+[Selection]-Let the user select objects with the mouse and drag points. This involves a fairly extensive rewriting of the selection code, and I'm not sure yet how it should proceed. Some of the outstanding questions are whether full interfaces as opposed to attributes should be selectable (probably should) and what should be shown as selected in the treeview if multiple objects are selected in the view.
+
+[Panning]-There needs to be a scrollview around the canvas, and probably rulers too. We need to be able to do things like zoom, pan and whatnot.
+
+[Load/Save]-Implement loading of files. The nodeset currently implements saving of files and tools, but the save format for tools is not supported by the tool loading code. The tool loading code should be rewritten to use libxml in order to read these files.
+
+[Undo]-Create a log of transactions that can be executed and undone. It might be useful to store this in each file, or to optionally store it in each file, but that's still TBD.
+
+[Intersection]-Certain sets of data can now be input to the program which are sufficient to constrain a diagram, but will not result in the program indicating the objects are constrained. Specifying some subset of attributes for some objects can reduce the value space of another attribute without specifying a value for the attribute. If there are multiple objects of this kind, a binding may inherit multiple reductions of its values space through multiple nodes for which it contains attributes. These reductions may collectively specify a value when no individual reduction is sufficient. To resolve this, we must support partial specification of values, and implement a library which can identify sets of intersection types which it can convert to a single reduction.
+
+[Connectors]-Implement polyline, curve and orthogonal connectors. In the short term, corners and control points will NOT be exposed attributes, so the number of segments may vary.
+
+[Bitmap]-Implement a bitmap primitive. Should work for lots of file types and whatnot.
+
+[Arc]-Implement an arc primitive that Supports circles and ellipses, probably with start and end angles
+
+[Spline]-Implement a bezier or possibly b-spline connector

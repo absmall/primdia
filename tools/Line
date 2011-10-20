@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<tool xmlns="http://leonardo.math.unb.ca/primdiag"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://leonardo.math.unb.ca/primdiag tool.xsd"
+description="Create a straight line">
+	<nodes>
+		<node name="L" type="LinePrimitive"/>
+	</nodes>
+	<bindings>
+		<binding type="2D Point" interface="Point 1">
+			<member node="L" attribute="Point 1"/>
+		</binding>
+		<binding type="2D Point" interface="Point 2">
+			<member node="L" attribute="Point 2"/>
+		</binding>
+		<binding type="Distance" interface="Length">
+			<member node="L" attribute="Length"/>
+		</binding>
+		<binding type="Bearing" interface="Slope">
+			<member node="L" attribute="Slope"/>
+		</binding>
+		<binding type="Distance" interface="Width" value="1">
+			<member node="L" attribute="Width"/>
+		</binding>
+		<binding type="Color" interface="Color" value="#000000FF">
+			<member node="L" attribute="Color"/>
+		</binding>
+	</bindings>
+</tool>

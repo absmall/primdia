@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<tool xmlns="http://leonardo.math.unb.ca/primdiag"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://leonardo.math.unb.ca/primdiag tool.xsd"
+description="Create a new point as the affine combination of two other points">
+	<nodes>
+		<node name="S" type="ScalePrimitive"/>
+	</nodes>
+	<bindings>
+		<binding type="2D Point" interface="Point 1">
+			<member node="S" attribute="Point 1"/>
+		</binding>
+		<binding type="2D Point" interface="Point 2">
+			<member node="S" attribute="Point 2"/>
+		</binding>
+		<binding type="2D Point" interface="Combination">
+			<member node="S" attribute="Combination"/>
+		</binding>
+		<binding type="Distance" interface="Ratio">
+			<member node="S" attribute="Ratio"/>
+		</binding>
+	</bindings>
+</tool>
