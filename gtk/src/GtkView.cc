@@ -307,7 +307,7 @@ gboolean GtkView::select_point(GtkWidget *widget, GdkEventButton *event, gpointe
 	view->document->update(Document::SetValue, NULL, NULL, (Binding *)handler.second);
 	gtk_statusbar_pop(view->statusbar, gtk_statusbar_get_context_id(view->statusbar, "Retrieve Point"));
 	view->settingValue = false;
-	gtk_signal_disconnect(view->canvas->getCairoWidget(), handler.first);
+	g_signal_handler_disconnect(view->canvas->getCairoWidget(), handler.first);
 
 	GdkCursor *cursor = gdk_cursor_new_for_display(gtk_widget_get_display(GTK_WIDGET(view->canvas->getCairoWidget())), GDK_LEFT_PTR);
 	gdk_window_set_cursor(gtk_widget_get_parent_window(GTK_WIDGET(view->canvas->getCairoWidget())), cursor);
@@ -421,13 +421,12 @@ void on_about_activate(GtkMenuItem *menuitem, gpointer user_data)
 {
 	const gchar *authors[] =
 	{
-		"Rob Connell",
 		"Aaron Small",
 		0
 	};
 
 	GtkAboutDialog *aboutDialog = GTK_ABOUT_DIALOG(gtk_about_dialog_new());
-	gtk_about_dialog_set_name(aboutDialog, _(PACKAGE));
+	gtk_about_dialog_set_program_name(aboutDialog, _(PACKAGE));
 	gtk_about_dialog_set_version(aboutDialog, PACKAGE_VERSION);
 	gtk_about_dialog_set_copyright(aboutDialog, "© 2005 Aaron Small");
 	gtk_about_dialog_set_website(aboutDialog, "https://primdia.net/svn/primdia");
@@ -463,7 +462,7 @@ void GtkView::setValue(Attribute *attr, GtkView *view)
 		gtk_statusbar_pop(view->statusbar, gtk_statusbar_get_context_id(view->statusbar, "Retrieve Point"));
 		pair<int, void *> handler = view->canvas_mouse_handler.top();
 		view->canvas_mouse_handler.pop();
-		gtk_signal_disconnect(view->canvas->getCairoWidget(), handler.first);
+		g_signal_handler_disconnect(view->canvas->getCairoWidget(), handler.first);
 		view->settingValue = false;
 	} else {
 		attr->getType()->input(view, attr->getBinding());
@@ -713,9 +712,6 @@ void GtkView::initialize()
 	selection = NULL;
 	settingValue = FALSE;
 
-	tooltips = gtk_tooltips_new();
-	gtk_tooltips_enable(tooltips);
-
 	accel_group = gtk_accel_group_new ();
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -811,7 +807,7 @@ void GtkView::initialize()
 	gtk_box_pack_start (GTK_BOX (hbox1), GTK_WIDGET(handlebox1), FALSE, FALSE, 0);
 
 	toolbar = gtk_toolbar_new ();
-	gtk_toolbar_set_orientation (GTK_TOOLBAR (toolbar), GTK_ORIENTATION_VERTICAL);
+	gtk_orientable_set_orientation (GTK_ORIENTABLE (toolbar), GTK_ORIENTATION_VERTICAL);
 	gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
 	gtk_container_set_border_width (GTK_CONTAINER (toolbar), 5);
 	gtk_widget_show(toolbar);
@@ -823,7 +819,7 @@ void GtkView::initialize()
 		GtkWidget *icon = gtk_image_new_from_file(gtkt->icon.c_str());
 		gtk_widget_show(GTK_WIDGET(icon));
 		GtkToolItem *toolitem = gtk_tool_button_new(icon, NULL);
-		gtk_tool_item_set_tooltip(toolitem, tooltips, i->second->description.c_str(), i->second->description.c_str());
+		gtk_tool_item_set_tooltip_text(toolitem, i->second->description.c_str());
 		gtk_tool_item_set_homogeneous(toolitem, true);
 		gtk_tool_item_set_visible_vertical(toolitem, true);
 		gtk_widget_show(GTK_WIDGET(toolitem));
@@ -952,13 +948,13 @@ void GtkView::updateWindowList()
 		GtkWidget *s = gtk_menu_new();
 		gtk_widget_show(s);
 
-		gtk_menu_append(windowMenu, d);
+		gtk_menu_shell_append(GTK_MENU_SHELL(windowMenu), d);
 		gtk_menu_item_set_submenu(GTK_MENU_ITEM(d), s);
 		foreach(j, (*i)->getViews())
 		{
 			GtkWidget *si = gtk_menu_item_new_with_label((*j)->getName().c_str());
 			gtk_widget_show(si);
-			gtk_menu_append(s, si);
+			gtk_menu_shell_append(GTK_MENU_SHELL(s), si);
 			g_signal_connect ((gpointer) si, "activate", G_CALLBACK (switch_view), *j);
 		}
 	}
@@ -1036,7 +1032,7 @@ void GtkView::update(int command, Attribute *attribute, Interface *node, Binding
 				GtkWidget *icon = gtk_image_new_from_file(gtkt->icon.c_str());
 				gtk_widget_show(GTK_WIDGET(icon));
 				GtkToolItem *toolitem = gtk_tool_button_new(icon, NULL);
-				gtk_tool_item_set_tooltip(toolitem, tooltips, i->second->description.c_str(), i->second->description.c_str());
+				gtk_tool_item_set_tooltip_text(toolitem, i->second->description.c_str());
 				gtk_tool_item_set_homogeneous(toolitem, true);
 				gtk_tool_item_set_visible_vertical(toolitem, true);
 				gtk_widget_show(GTK_WIDGET(toolitem));

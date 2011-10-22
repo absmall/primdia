@@ -141,7 +141,7 @@ if not GetOption('clean'):
 # Set up environment variables #
 ################################
 
-env = Environment(CPPPATH = 'inc', CCFLAGS='-g3', variables = vars)
+env = Environment(CPPPATH = 'inc', CCFLAGS='-g3 -DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED', variables = vars)
 
 Help(vars.GenerateHelpText(env))
 

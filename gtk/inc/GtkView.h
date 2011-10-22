@@ -67,7 +67,6 @@ private:
 	GtkWidget *pane;
 	GtkWidget *setvalue;
 	GtkWidget *toolbar;
-	GtkTooltips *tooltips;
 	bool settingValue;
 	std::stack<std::pair<int,void *> > canvas_mouse_handler;
 };
