@@ -428,8 +428,8 @@ void on_about_activate(GtkMenuItem *menuitem, gpointer user_data)
 	GtkAboutDialog *aboutDialog = GTK_ABOUT_DIALOG(gtk_about_dialog_new());
 	gtk_about_dialog_set_program_name(aboutDialog, _(PACKAGE));
 	gtk_about_dialog_set_version(aboutDialog, PACKAGE_VERSION);
-	gtk_about_dialog_set_copyright(aboutDialog, "© 2005 Aaron Small");
-	gtk_about_dialog_set_website(aboutDialog, "https://primdia.net/svn/primdia");
+	gtk_about_dialog_set_copyright(aboutDialog, "© 2011 Aaron Small");
+	gtk_about_dialog_set_website(aboutDialog, "http://smeagle.dyndns.org/~absmall/primdia/");
 	gtk_about_dialog_set_authors(aboutDialog, authors);
 
 	gtk_dialog_run(GTK_DIALOG(aboutDialog));
