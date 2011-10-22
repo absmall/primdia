@@ -141,7 +141,7 @@ if not GetOption('clean'):
 # Set up environment variables #
 ################################
 
-env = Environment(CPPPATH = 'inc', CCFLAGS='-g3 -DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED', variables = vars)
+env = Environment(CPPPATH = 'inc', CCFLAGS='-g3', variables = vars)
 
 Help(vars.GenerateHelpText(env))
 
@@ -154,6 +154,7 @@ srcFiles = Glob('src/*.cc')
 uiEnv = env.Clone()
 if(env.get('UI') == 'gtk'):
 	uiEnv.ParseConfig('pkg-config --cflags --libs gtk+-2.0 cairo gconf-2.0 pango pangocairo libxml++-2.6')
+	uiEnv.Append(CPPDEFINES=['GTK_DISABLE_SINGLE_INCLUDES', 'GDK_DISABLE_DEPRECATED', 'GTK_DISABLE_DEPRECATED'])
 if(env.get('UI') == 'console'):
 	uiEnv.Append(LIBS=['readline'])
 uiEnv.Append(CPPPATH=['${UI}/inc'])
