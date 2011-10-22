@@ -1,0 +1,12 @@
+To start off with: this program was created as a proof-of-concept for a new
+kind of technical diagramming tool. Because it is a proof of concept, don't
+expect great usability - I do hope that will come one day, but it isn't the
+primary goal at this point.
+
+The concept being proven is that it's possible to build a diagramming tool out
+of only truly primitive components: lines, arcs, etc. Modern diagramming tools
+provide lots of other primitives, for example rectangles, rectangles with
+rounded corners, rectangles that contain text and resize with the text and
+various other more complex shapes. This program attempts to prove that all of
+these components can be created within the illustrator program.  Only the truly
+primitive objects will be created in C code.
