@@ -28,8 +28,8 @@ void GtkLabelType::input(View *v, Binding *b) const
 	GtkWidget *label = gtk_label_new(_("Please enter text"));
 	gtk_widget_show(label);
 
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), label);
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), text);
+	gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), label);
+	gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), text);
 
 	gint ret = gtk_dialog_run(GTK_DIALOG(dialog));
 	if (ret == GTK_RESPONSE_ACCEPT)

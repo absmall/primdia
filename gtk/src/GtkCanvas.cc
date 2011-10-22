@@ -13,19 +13,18 @@ GtkCanvas::GtkCanvas(View *v)
 {
 	this->view = v;
 	canvas = gtk_drawing_area_new ();
-	g_signal_connect (G_OBJECT (canvas), "expose-event", G_CALLBACK (paint), (void *)this);
+	g_signal_connect (G_OBJECT (canvas), "draw", G_CALLBACK (paint), (void *)this);
 }
 
 GtkCanvas::~GtkCanvas()
 {
-	cairo_destroy (cairo);
 	gtk_widget_destroy (canvas);
 }
 
 void GtkCanvas::refresh()
 {
-	gint width    = GTK_WIDGET(canvas)->allocation.width;
-	gint height   = GTK_WIDGET(canvas)->allocation.height;
+	gint width    = gtk_widget_get_allocated_width(canvas);
+	gint height   = gtk_widget_get_allocated_height(canvas);
 
 	cairo_save(cairo);
 	cairo_identity_matrix(cairo);
@@ -54,9 +53,9 @@ void GtkCanvas::refresh()
 	cairo_restore(cairo);
 }
 
-void GtkCanvas::paint (GtkWidget *widget, GdkEventExpose *eev, gpointer *data)
+void GtkCanvas::paint (GtkWidget *widget, cairo_t *cr, gpointer *data)
 {
-	((GtkCanvas *)data)->cairo = gdk_cairo_create (widget->window);
+	((GtkCanvas *)data)->cairo = cr;
 	((GtkCanvas *)data)->refresh();
 }
 
@@ -72,8 +71,8 @@ GtkWidget *GtkCanvas::getCairoWidget()
 
 void GtkCanvas::toCanvas(double *x, double *y)
 {
-	gint width = GTK_WIDGET(canvas)->allocation.width;
-	gint height = GTK_WIDGET(canvas)->allocation.height;
+	gint width = gtk_widget_get_allocated_width(GTK_WIDGET(canvas));
+	gint height = gtk_widget_get_allocated_height(GTK_WIDGET(canvas));
 
 	*x -= width/2;
 	*y = height/2 - *y;

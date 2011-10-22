@@ -27,7 +27,7 @@ gboolean GtkView::on_treeview_key(GtkWidget *widget, GdkEventKey *event, gpointe
 {
 	GtkView *gtkv = (GtkView *)user_data;
 
-	if (event->keyval == GDK_Delete)
+	if (event->keyval == GDK_KEY_Delete)
 	{
 		if (gtkv->selection != NULL)
 		{
@@ -367,8 +367,8 @@ void on_savetool_activate(GtkMenuItem *menuitem, gpointer user_data)
 	GtkWidget *label = gtk_label_new(_("Please enter tool name"));
 	gtk_widget_show(label);
 
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(file)->vbox), label);
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(file)->vbox), field);
+	gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(file))), label);
+	gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(file))), field);
 
 	gint ret = gtk_dialog_run(GTK_DIALOG(file));
 	if (ret == GTK_RESPONSE_ACCEPT)
@@ -519,8 +519,8 @@ void GtkView::destroy(GtkWidget *widget, gpointer data)
 	gconf_value_set_int(v, gtk_paned_get_position(GTK_PANED(gtkv->pane)));
 	gconf_client_set(client, "/apps/primdiag/canvaswidth", v, NULL);
 
-	width = gtkv->window->allocation.width;
-	height = gtkv->window->allocation.height;
+	width = gtk_widget_get_allocated_width(gtkv->window);
+	height = gtk_widget_get_allocated_height(gtkv->window);
 
 	gconf_value_set_int(v, width);
 	gconf_client_set(client, "/apps/primdiag/width", v, NULL);

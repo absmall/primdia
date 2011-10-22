@@ -28,7 +28,7 @@ void GtkFlagType::input(View *v, Binding *b) const
 	check = gtk_check_button_new_with_label("Visible");
 	gtk_widget_show(check);
 
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), check);
+	gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), check);
 	gint ret = gtk_dialog_run(GTK_DIALOG(dialog));
 
 	if (ret == GTK_RESPONSE_ACCEPT)

@@ -34,7 +34,7 @@ void GtkColorType::input(View *v, Binding *b) const
 {
 	GtkView *gtkv = static_cast<GtkView *>(v);
 	GtkWidget *dialog = gtk_color_selection_dialog_new(_("Select color"));
-	GtkColorSelection *colorsel = GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(dialog)->colorsel);
+	GtkColorSelection *colorsel = GTK_COLOR_SELECTION(gtk_color_selection_dialog_get_color_selection(GTK_COLOR_SELECTION_DIALOG(dialog)));
 	gtk_color_selection_set_has_opacity_control(colorsel, true);
 
 	gint ret = gtk_dialog_run(GTK_DIALOG(dialog));

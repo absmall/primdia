@@ -14,7 +14,7 @@ public:
 
 	void refresh();
 
-	static void paint (GtkWidget *widget, GdkEventExpose *eev, gpointer *data);
+	static void paint (GtkWidget *widget, cairo_t *cr, gpointer *data);
 
 	cairo_t *getCairoContext();
 

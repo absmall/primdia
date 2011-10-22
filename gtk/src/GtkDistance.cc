@@ -22,20 +22,20 @@ void GtkDistanceType::input(View *v, Binding *b) const
 	GtkView *gtkv = static_cast<GtkView *>(v);
 	GtkWidget *dialog = input_dialog(gtkv->window, _("Please enter distance"));
 
-	GtkObject *adj = gtk_adjustment_new(0, 0, 1000, 1, 10, 0);
-	GtkWidget *value = gtk_spin_button_new(GTK_ADJUSTMENT(adj), 1, 0);
+	GtkAdjustment *adj = gtk_adjustment_new(0, 0, 1000, 1, 10, 0);
+	GtkWidget *value = gtk_spin_button_new(adj, 1, 0);
 	gtk_widget_show(value);
 
 	GtkWidget *label = gtk_label_new(_("Please enter distance"));
 	gtk_widget_show(label);
 
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), label);
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), value);
+	gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), label);
+	gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), value);
 
 	gint ret = gtk_dialog_run(GTK_DIALOG(dialog));
 	if (ret == GTK_RESPONSE_ACCEPT)
 	{
-		if (b->setValue(gtkv->document, new Distance(gtk_adjustment_get_value(GTK_ADJUSTMENT(adj)))))
+		if (b->setValue(gtkv->document, new Distance(gtk_adjustment_get_value(adj))))
 		{
 			gtkv->document->update(Document::SetValue, NULL, NULL, b);
 		} else {

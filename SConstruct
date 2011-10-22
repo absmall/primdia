@@ -103,7 +103,7 @@ if not GetOption('clean'):
 	uilibs = {}
 	uilibs['console'] = []
 	uilibs['qt'] = []
-	uilibs['gtk'] = [ ('gtk+-2.0', '2.4.9'),
+	uilibs['gtk'] = [ ('gtk+-3.0', '3.0.0'),
 	                  ('gconf-2.0', 0),
 	                  ('pango', 0),
 	                  ('pangocairo', 0) ]
@@ -153,8 +153,7 @@ env.ParseConfig('pkg-config --cflags --libs libxml++-2.6')
 srcFiles = Glob('src/*.cc')
 uiEnv = env.Clone()
 if(env.get('UI') == 'gtk'):
-	uiEnv.ParseConfig('pkg-config --cflags --libs gtk+-2.0 cairo gconf-2.0 pango pangocairo libxml++-2.6')
-	uiEnv.Append(CPPDEFINES=['GTK_DISABLE_SINGLE_INCLUDES', 'GDK_DISABLE_DEPRECATED', 'GTK_DISABLE_DEPRECATED'])
+	uiEnv.ParseConfig('pkg-config --cflags --libs gtk+-3.0 cairo gconf-2.0 pango pangocairo libxml++-2.6')
 if(env.get('UI') == 'console'):
 	uiEnv.Append(LIBS=['readline'])
 uiEnv.Append(CPPPATH=['${UI}/inc'])

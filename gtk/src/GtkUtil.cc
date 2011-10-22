@@ -5,10 +5,10 @@
 
 static int defresponse(GtkWidget *widget, GdkEventKey *key)
 {
-	if (key->keyval == GDK_Escape)
+	if (key->keyval == GDK_KEY_Escape)
 	{
 		gtk_dialog_response(GTK_DIALOG(widget), GTK_RESPONSE_REJECT);
-	} else if (key->keyval == GDK_Return) {
+	} else if (key->keyval == GDK_KEY_Return) {
 		gtk_dialog_response(GTK_DIALOG(widget), GTK_RESPONSE_ACCEPT);
 	}
 
