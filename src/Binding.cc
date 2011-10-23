@@ -149,8 +149,6 @@ bool Binding::unsetValue(Document *doc, Attribute *attr)
 		derived = NULL;
 
 		propagate();
-
-		return true;
 	}
 
 	return true;
@@ -262,22 +260,16 @@ bool Binding::setValue(Value *v, Attribute *attr)
 
 	if (value)
 	{
-		// We already have a value. Just swap it out and propagate from here
-		derived = attr;
+		// We already have a value, so clear it first.
 		delete value;
-		value = v;
-		propagate();
+	}
+
+	derived = attr;
+	value = v;
+	if( propagate()) {
 		return true;
 	} else {
-		derived = attr;
-		value = v;
-
-		if (propagate())
-		{
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	}
 }
 
