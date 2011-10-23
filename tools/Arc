@@ -10,15 +10,15 @@ description="Create an Arc">
 		<binding type="2D Point" interface="Point">
 			<member node="A" attribute="Point"/>
 		</binding>
-                <binding type="Distance" interface="Radius">
-        	        <member node="A" attribute="Radius"/>
-                </binding>
-                <binding type="Bearing" interface="Angle 1">
-                        <member node="A" attribute="Angle 1"/>
-                </binding>
-                <binding type="Bearing" interface="Angle 2">
-                        <member node="A" attribute="Angle 2"/>
-                </binding>
+		<binding type="Distance" interface="Radius">
+			<member node="A" attribute="Radius"/>
+		</binding>
+		<binding type="Bearing" interface="Angle 1">
+				<member node="A" attribute="Angle 1"/>
+		</binding>
+		<binding type="Bearing" interface="Angle 2">
+				<member node="A" attribute="Angle 2"/>
+		</binding>
 		<binding type="Distance" interface="Width" value="1">
 			<member node="A" attribute="Width"/>
 		</binding>
