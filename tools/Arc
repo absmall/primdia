@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<tool xmlns="http://leonardo.math.unb.ca/primdiag"
+<tool xmlns="http://smeagle.dyndns.org/primdia"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://leonardo.math.unb.ca/primdiag tool.xsd"
+xsi:schemaLocation="http://smeagle.dyndns.org/primdia tool.xsd"
 description="Create an Arc">
 	<nodes>
 		<node name="A" type="ArcPrimitive"/>

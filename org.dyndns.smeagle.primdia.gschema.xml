@@ -1,5 +1,5 @@
  <schemalist gettext-domain="FIXME">
-  <schema id="org.dyndns.smeagle.primdia" path="/apps/primdiag/">
+  <schema id="org.dyndns.smeagle.primdia" path="/apps/primdia/">
     <key name="canvaswidth" type="i">
       <default l10n="messages" context="canvaswidth">80</default>
       <summary>Width of the canvas</summary>

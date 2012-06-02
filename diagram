@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<diagram xmlns="http://leonardo.math.unb.ca/primdiag/diagram">
+<diagram xmlns="http://smeagle.dyndns.org/primdia/diagram">
   <interfaces>
     <interface name="Line">
       <node name="282138579" type="LinePrimitive"/>

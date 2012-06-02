@@ -61,7 +61,7 @@ void NodeSet::saveAs(const std::string &name)
 	xmlpp::Document document;
 
 	xmlpp::Element *diagramRoot = document.create_root_node("diagram");
-	diagramRoot->set_namespace_declaration("http://leonardo.math.unb.ca/primdiag/diagram");
+	diagramRoot->set_namespace_declaration("http://smeagle.dyndns.org/primdia/diagram");
 
 	xmlpp::Element *interfaceRoot = diagramRoot->add_child("interfaces");
 	foreach(i, nodes)
@@ -145,7 +145,7 @@ void NodeSet::saveTool(const std::string &name)
 	int attribute_count = 1;
 
 	xmlpp::Element *toolRoot = document.create_root_node("tool");
-	toolRoot->set_namespace_declaration("http://leonardo.math.unb.ca/primdiag/tool");
+	toolRoot->set_namespace_declaration("http://smeagle.dyndns.org/primdia/tool");
 	toolRoot->set_attribute("description", name.c_str());
 
 	foreach(i, nodes)
