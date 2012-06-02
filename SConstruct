@@ -174,7 +174,7 @@ Default(app)
 # Tools
 env.Install('$prefix/share/'+packageSafeName+'/tools', Glob('tools/*'))
 env.Install('$prefix/share/'+packageSafeName+'/images', Glob('images/*'))
-schema_install = env.Install(schemaDir, 'org.dyndns.smeagle.primdia.gschema.xml')
+schema_install = env.Install(schemaDir, 'xml/org.dyndns.smeagle.primdia.gschema.xml')
 schema_compile = env.Command(schemaDir+'/gschemas.compiled', schemaDir+'/org.dyndns.smeagle.primdia.gschema.xml', 'glib-compile-schemas '+schemaDir)
 
 # Schema
