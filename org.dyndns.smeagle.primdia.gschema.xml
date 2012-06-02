@@ -1,0 +1,19 @@
+ <schemalist gettext-domain="FIXME">
+  <schema id="org.dyndns.smeagle.primdia" path="/apps/primdiag/">
+    <key name="canvaswidth" type="i">
+      <default l10n="messages" context="canvaswidth">80</default>
+      <summary>Width of the canvas</summary>
+      <description>What percentage of the width of the main window should be occupied by the canvas.</description>
+    </key>
+    <key name="width" type="i">
+      <default l10n="messages" context="width">400</default>
+      <summary>Width of the application at startup</summary>
+      <description>When a new document window is opened, how wide should it be?</description>
+    </key>
+    <key name="height" type="i">
+      <default l10n="messages" context="height">200</default>
+      <summary>Height of the application at startup</summary>
+      <description>When a new document window is opened, how high should it be?</description>
+    </key>
+  </schema>
+</schemalist>

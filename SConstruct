@@ -91,6 +91,7 @@ configEnv = Environment(variables = vars)
 packageName = configEnv.get('name')
 packageSafeName = safename(packageName)
 localeDir = configEnv.get('prefix')+'/share/locale'
+schemaDir = configEnv.get('prefix')+'/share/glib-2.0/schemas'
 useGettext = configEnv.get('gettext')
 
 ########################################
@@ -104,7 +105,7 @@ if not GetOption('clean'):
 	uilibs['console'] = []
 	uilibs['qt'] = []
 	uilibs['gtk'] = [ ('gtk+-3.0', '3.0.0'),
-	                  ('gconf-2.0', 0),
+	                  ('gio-2.0', 0),
 	                  ('pango', 0),
 	                  ('pangocairo', 0) ]
 
@@ -153,7 +154,7 @@ env.ParseConfig('pkg-config --cflags --libs libxml++-2.6')
 srcFiles = Glob('src/*.cc')
 uiEnv = env.Clone()
 if(env.get('UI') == 'gtk'):
-	uiEnv.ParseConfig('pkg-config --cflags --libs gtk+-3.0 cairo gconf-2.0 pango pangocairo libxml++-2.6')
+	uiEnv.ParseConfig('pkg-config --cflags --libs gtk+-3.0 cairo gio-2.0 pango pangocairo libxml++-2.6')
 if(env.get('UI') == 'console'):
 	uiEnv.Append(LIBS=['readline'])
 uiEnv.Append(CPPPATH=['${UI}/inc'])
@@ -173,10 +174,11 @@ Default(app)
 # Tools
 env.Install('$prefix/share/'+packageSafeName+'/tools', Glob('tools/*'))
 env.Install('$prefix/share/'+packageSafeName+'/images', Glob('images/*'))
-gconf_install = env.Command('gconf_install', 'schema', 'gconftool --install-schema-file $SOURCE')
+schema_install = env.Install(schemaDir, 'org.dyndns.smeagle.primdia.gschema.xml')
+schema_compile = env.Command(schemaDir+'/gschemas.compiled', schemaDir+'/org.dyndns.smeagle.primdia.gschema.xml', 'glib-compile-schemas '+schemaDir)
 
 # Schema
-env.Alias('install', ['$prefix', gconf_install])
+env.Alias('install', ['$prefix', schema_compile])
 
 # Gettext stufff
 mo_bld = Builder (action = mo_builder)

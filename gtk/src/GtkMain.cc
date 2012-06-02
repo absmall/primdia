@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <iostream>
-#include <gconf/gconf-client.h>
+#include <gio/gio.h>
 
 #include <GtkTool.h>
 #include <GtkView.h>
@@ -8,7 +8,7 @@
 
 using namespace std;
 
-GConfClient *client;
+GSettings *client;
 
 int main(int argc, char *argv[])
 {
@@ -28,13 +28,7 @@ int main(int argc, char *argv[])
 	}
 
 	gtk_init(&argc, &argv);
-	if (gconf_init(argc, argv, &err))
-	{
-		client = gconf_client_get_default();
-	} else {
-		cout << "Could not connect to gconf. Configuration settings are not accessible." << endl;
-		g_error_free(err);
-	}
+    g_settings_new("org.dyndns.smeagle.primdia");
 
 	GtkTool::Init();
 

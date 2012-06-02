@@ -8,7 +8,6 @@
  */
 
 #include <gtk/gtk.h>
-#include <gconf/gconf.h>
 
 #include <Document.h>
 

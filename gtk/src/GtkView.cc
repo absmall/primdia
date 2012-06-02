@@ -2,7 +2,6 @@
 #include <fstream>
 #include <iostream>
 #include <gdk/gdkkeysyms.h>
-#include <gconf/gconf-client.h>
 
 #include <Node.h>
 #include <Tool.h>
@@ -514,20 +513,13 @@ void GtkView::destroy(GtkWidget *widget, gpointer data)
 	gint width, height;
 	GtkView *gtkv=(GtkView *)data;
 
-	GConfValue *v = gconf_value_new(GCONF_VALUE_INT);
-
-	gconf_value_set_int(v, gtk_paned_get_position(GTK_PANED(gtkv->pane)));
-	gconf_client_set(client, "/apps/primdiag/canvaswidth", v, NULL);
+    g_settings_set_int(client, "/apps/primdiag/canvaswidth", gtk_paned_get_position(GTK_PANED(gtkv->pane)));
 
 	width = gtk_widget_get_allocated_width(gtkv->window);
 	height = gtk_widget_get_allocated_height(gtkv->window);
 
-	gconf_value_set_int(v, width);
-	gconf_client_set(client, "/apps/primdiag/width", v, NULL);
-	gconf_value_set_int(v, height);
-	gconf_client_set(client, "/apps/primdiag/height", v, NULL);
-
-	gconf_value_free(v);
+    g_settings_set_int(client, "/apps/primdiag/width", width);
+    g_settings_set_int(client, "/apps/primdiag/height", height);
 
 	delete gtkv;
 }
@@ -707,7 +699,6 @@ void GtkView::initialize()
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
 	GtkTreeSelection *node_list_selection;
-	GConfValue *value;
 
 	selection = NULL;
 	settingValue = FALSE;
@@ -831,9 +822,7 @@ void GtkView::initialize()
 
 	pane = gtk_hpaned_new();
 	gtk_widget_show(GTK_WIDGET(pane));
-	value = gconf_client_get(client, "/apps/primdiag/canvaswidth", NULL);
-	gtk_paned_set_position(GTK_PANED(pane), gconf_value_get_int(value));
-	if (value != NULL) gconf_value_free(value);
+	gtk_paned_set_position(GTK_PANED(pane), g_settings_get_int(client, "/apps/primdiag/canvaswidth"));
 	gtk_box_pack_start (GTK_BOX (hbox1), GTK_WIDGET(pane), TRUE, TRUE, 0);
 
 	canvas = new GtkCanvas(this);
@@ -843,12 +832,9 @@ void GtkView::initialize()
 	gtk_paned_pack1(GTK_PANED(pane), GTK_WIDGET(canvas->getCairoWidget()), TRUE, TRUE);
 
 	// Now resize the window to match the last window that closed
-	value = gconf_client_get(client, "/apps/primdiag/width", NULL);
-	int width = gconf_value_get_int(value);
-	if (value != NULL) gconf_value_free(value);
-	value = gconf_client_get(client, "/apps/primdiag/height", NULL);
-	int height = gconf_value_get_int(value);
-	if (value != NULL) gconf_value_free(value);
+	
+	int width = g_settings_get_int(client, "/apps/primdiag/width");
+	int height = g_settings_get_int(client, "/apps/primdiag/height");
 
 	gtk_window_set_default_size(GTK_WINDOW(window), width, height);
 
