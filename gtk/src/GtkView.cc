@@ -708,7 +708,7 @@ void GtkView::initialize()
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title (GTK_WINDOW (window), _("Main window"));
 
-	vbox1 = gtk_vbox_new (FALSE, 0);
+	vbox1 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	gtk_widget_show (vbox1);
 	gtk_container_add (GTK_CONTAINER (window), vbox1);
 
@@ -788,7 +788,7 @@ void GtkView::initialize()
 	gtk_widget_show (about);
 	gtk_container_add (GTK_CONTAINER (menu4), about);
 
-	hbox1 = gtk_hbox_new (FALSE, 0);
+	hbox1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox1), GTK_WIDGET(hbox1), TRUE, TRUE, 0);
 
@@ -820,7 +820,7 @@ void GtkView::initialize()
 				G_CALLBACK(create_event), gtkt);
 	}
 
-	pane = gtk_hpaned_new();
+	pane = gtk_paned_new(GTK_ORIENTATION_HORIZONTAL);
 	gtk_widget_show(GTK_WIDGET(pane));
 	gtk_paned_set_position(GTK_PANED(pane), g_settings_get_int(client, "/apps/primdiag/canvaswidth"));
 	gtk_box_pack_start (GTK_BOX (hbox1), GTK_WIDGET(pane), TRUE, TRUE, 0);

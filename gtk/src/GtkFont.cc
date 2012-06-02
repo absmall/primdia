@@ -11,17 +11,17 @@ static GtkFontType instance;
 void GtkFontType::input(View *v, Binding *b) const
 {
 	GtkView *gtkv = static_cast<GtkView *>(v);
-	GtkWidget *dialog = gtk_font_selection_dialog_new(_("Please choose font"));
+	GtkWidget *dialog = gtk_font_chooser_dialog_new(_("Please choose font"), NULL);
 
 	if (b->hasValue())
 	{
-		gtk_font_selection_dialog_set_font_name(GTK_FONT_SELECTION_DIALOG(dialog), b->getValue()->getString().c_str());
+		gtk_font_chooser_set_font(GTK_FONT_CHOOSER(dialog), b->getValue()->getString().c_str());
 	}
 
 	gint ret = gtk_dialog_run(GTK_DIALOG(dialog));
 	if (ret == GTK_RESPONSE_OK)
 	{
-		if (b->setValue(gtkv->document, new Font(gtk_font_selection_dialog_get_font_name(GTK_FONT_SELECTION_DIALOG(dialog)))))
+		if (b->setValue(gtkv->document, new Font(gtk_font_chooser_get_font(GTK_FONT_CHOOSER(dialog)))))
 		{
 			gtkv->document->update(Document::SetValue, NULL, NULL, b);
 		} else {
