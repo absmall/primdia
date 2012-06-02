@@ -513,13 +513,13 @@ void GtkView::destroy(GtkWidget *widget, gpointer data)
 	gint width, height;
 	GtkView *gtkv=(GtkView *)data;
 
-    g_settings_set_int(client, "/apps/primdia/canvaswidth", gtk_paned_get_position(GTK_PANED(gtkv->pane)));
+    g_settings_set_int(client, "canvaswidth", gtk_paned_get_position(GTK_PANED(gtkv->pane)));
 
 	width = gtk_widget_get_allocated_width(gtkv->window);
 	height = gtk_widget_get_allocated_height(gtkv->window);
 
-    g_settings_set_int(client, "/apps/primdia/width", width);
-    g_settings_set_int(client, "/apps/primdia/height", height);
+    g_settings_set_int(client, "width", width);
+    g_settings_set_int(client, "height", height);
 
 	delete gtkv;
 }
@@ -822,7 +822,7 @@ void GtkView::initialize()
 
 	pane = gtk_paned_new(GTK_ORIENTATION_HORIZONTAL);
 	gtk_widget_show(GTK_WIDGET(pane));
-	gtk_paned_set_position(GTK_PANED(pane), g_settings_get_int(client, "/apps/primdia/canvaswidth"));
+	gtk_paned_set_position(GTK_PANED(pane), g_settings_get_int(client, "canvaswidth"));
 	gtk_box_pack_start (GTK_BOX (hbox1), GTK_WIDGET(pane), TRUE, TRUE, 0);
 
 	canvas = new GtkCanvas(this);
@@ -833,8 +833,8 @@ void GtkView::initialize()
 
 	// Now resize the window to match the last window that closed
 	
-	int width = g_settings_get_int(client, "/apps/primdia/width");
-	int height = g_settings_get_int(client, "/apps/primdia/height");
+	int width = g_settings_get_int(client, "width");
+	int height = g_settings_get_int(client, "height");
 
 	gtk_window_set_default_size(GTK_WINDOW(window), width, height);
 

@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	}
 
 	gtk_init(&argc, &argv);
-    g_settings_new("org.dyndns.smeagle.primdia");
+    client = g_settings_new("org.dyndns.smeagle.primdia");
 
 	GtkTool::Init();
 
