@@ -11,9 +11,7 @@
 #include <set>
 #include <list>
 
-#include <NodeSet.h>
-
-class Document : public NodeSet
+class Document
 {
 public:
 	/**
@@ -129,6 +127,12 @@ public:
 	void saveAs(const std::string &name);
 
 	/**
+	 * Save the node in the format of a tool to a file.
+	 * @param name The name of the file
+	 */
+	void saveTool(const std::string &name);
+
+	/**
 	 * Check whether the document has been modified since it was last
 	 * saved.
 	 * @return true if modifications have occured, false otherwise
@@ -138,12 +142,17 @@ public:
 private:
 	static void updateDocumentList();
 	std::string makeTemporaryDocumentName();
+    void write_file(const std::string &name);
 	std::list<View *> views;
 	bool has_name;
 	bool modified;
 	std::string name;
 	static int newDocuments;
 	static std::list<Document *> documentList;
+	/**
+	 * This stores all the interfaces instantiated into the document.
+	 */
+	std::set<Interface *> nodes;
 };
 
 
