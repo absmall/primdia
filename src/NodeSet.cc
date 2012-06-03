@@ -19,10 +19,12 @@ void NodeSet::load(const std::string &name)
 	{
 		PARSING_NOTHING,
 		PARSING_DIAGRAM,
+		PARSING_INTERFACES,
 		PARSING_INTERFACE,
 		PARSING_INTERFACE_NODE,
 		PARSING_BINDINGS,
-		PARSING_BINDINGS_MEMBER
+		PARSING_BINDING,
+		PARSING_BINDING_MEMBER
 	} state;
 
 	state = PARSING_NOTHING;
@@ -30,22 +32,91 @@ void NodeSet::load(const std::string &name)
 
 	while (reader.read())
 	{
-		switch(state) {
-			case PARSING_NOTHING:
-				if( reader.get_name() == "diagram" ) {
-					state = PARSING_DIAGRAM;
-				} else {
-					throw std::string("Parse error");
-				}
-				break;
-			case PARSING_DIAGRAM:
-			case PARSING_INTERFACE:
-			case PARSING_INTERFACE_NODE:
-			case PARSING_BINDINGS:
-			case PARSING_BINDINGS_MEMBER:
-			default:
-				throw std::string("Unexpected parser state");
-		}
+        std::cout << "See name " << reader.get_name() << "(" << reader.get_node_type() << ")" << std::endl;
+        switch(reader.get_node_type()) {
+            case xmlpp::TextReader::Element:
+                switch(state) {
+                    case PARSING_NOTHING:
+                        if( reader.get_name() == "diagram" ) {
+                            state = PARSING_DIAGRAM;
+                        }
+                        break;
+                    case PARSING_DIAGRAM:
+                        if( reader.get_name() == "interfaces" ) {
+                            state = PARSING_INTERFACES;
+                        } else if( reader.get_name() == "bindings" ) {
+                            state = PARSING_BINDINGS;
+                        }
+                        break;
+                    case PARSING_INTERFACES:
+                        if( reader.get_name() == "interface" ) {
+                            state = PARSING_INTERFACE;
+                        }
+                        break;
+                    case PARSING_INTERFACE:
+                        if( reader.get_name() == "node" ) {
+                            state = PARSING_INTERFACE_NODE;
+                        }
+                        break;
+                    case PARSING_INTERFACE_NODE:
+                        break;
+                    case PARSING_BINDINGS:
+                        if( reader.get_name() == "binding" ) {
+                            state = PARSING_BINDING;
+                        }
+                        break;
+                    case PARSING_BINDING:
+                        if( reader.get_name() == "member" ) {
+                            state = PARSING_BINDING_MEMBER;
+                        }
+                        break;
+                    case PARSING_BINDING_MEMBER:
+                    default:
+                        std::cout << "Unexpected open tag" << std::endl;
+                }
+                break;
+            case xmlpp::TextReader::EndElement:
+                switch(state) {
+                    case PARSING_DIAGRAM:
+                        if( reader.get_name() == "diagram" ) {
+                            state = PARSING_NOTHING;
+                        }
+                        break;
+                    case PARSING_INTERFACES:
+                        if( reader.get_name() == "interfaces" ) {
+                            state = PARSING_DIAGRAM;
+                        }
+                        break;
+                    case PARSING_INTERFACE:
+                        if( reader.get_name() == "interface" ) {
+                            state = PARSING_INTERFACES;
+                        }
+                        break;
+                    case PARSING_INTERFACE_NODE:
+                        if( reader.get_name() == "node" ) {
+                            state = PARSING_INTERFACE;
+                        }
+                        break;
+                    case PARSING_BINDINGS:
+                        if( reader.get_name() == "bindings" ) {
+                            state = PARSING_DIAGRAM;
+                        }
+                        break;
+                    case PARSING_BINDING:
+                        if( reader.get_name() == "binding" ) {
+                            state = PARSING_BINDINGS;
+                        }
+                        break;
+                    default:
+                        std::cout << "Unexpected close tag" << std::endl;
+                }
+            case xmlpp::TextReader::Text:
+            case xmlpp::TextReader::SignificantWhitespace:
+            case xmlpp::TextReader::Whitespace:
+                break;
+            default:
+                std::cout << "Unexpected element type" << std::endl;
+        }
 	}
 }
 

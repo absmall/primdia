@@ -732,7 +732,7 @@ void GtkView::initialize()
 	gtk_container_add (GTK_CONTAINER (menu1), new_view);
 
 	open1 = gtk_image_menu_item_new_from_stock ("gtk-open", accel_group);
-	//gtk_widget_show (open1);
+	gtk_widget_show (open1);
 	gtk_container_add (GTK_CONTAINER (menu1), open1);
 
 	savetool = gtk_menu_item_new_with_mnemonic(_("Save _Tool"));
