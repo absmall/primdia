@@ -15,6 +15,7 @@
 #include <Attribute.h>
 #include <Exception.h>
 #include <Interface.h>
+#include <InterfaceAttribute.h>
 
 using namespace std;
 
@@ -327,11 +328,10 @@ void Document::write_file(const std::string &name)
 {
 	// Count the primitives
 	std::set<Binding *> b;
-	std::map<int, Node *> anodes;
 	std::map<int, Binding *> bindings;
-	std::map<int, Interface *> interfaces;
-	std::map<Node *, int> rnodes;
 	std::map<Binding *, int> rbindings;
+	std::map<int, Interface *> interfaces;
+	std::map<Interface *, int> rinterfaces;
 	xmlpp::Document document;
 
 	xmlpp::Element *diagramRoot = document.create_root_node("diagram");
@@ -341,27 +341,16 @@ void Document::write_file(const std::string &name)
 	foreach(i, nodes)
 	{
 		int r;
+        std::ostringstream ss;
 		do r = rand(); while(interfaces.find(r) != interfaces.end());
+        ss << r;
 
 		xmlpp::Element *interface = interfaceRoot->add_child("interface");
-		interface->set_attribute("name", (*i)->getName().c_str());
+		interface->set_attribute("type", (*i)->getName().c_str());
+		interface->set_attribute("name", ss.str());
 
 		interfaces[r] = *i;
-
-		foreach(j, (*i)->nodes)
-		{
-			int r;
-			do r = rand(); while(anodes.find(r) != anodes.end());
-			std::ostringstream ss;
-			ss << r;
-
-			xmlpp::Element *node = interface->add_child("node");
-			node->set_attribute("name", ss.str());
-			node->set_attribute("type", (*j)->type->name.c_str());
-
-			anodes[r] = *j;
-			rnodes[*j] = r;
-		}
+		rinterfaces[*i] = r;
 
 		(*i)->getBindings(b);
 	}
@@ -391,10 +380,10 @@ void Document::write_file(const std::string &name)
 
 		foreach(j, b->attributes)
 		{
-			if ((*j)->getNode() != NULL)
+			if ((*j)->getNode() == NULL)
 			{
 				std::ostringstream ss;
-				ss << rnodes[(*j)->getNode()];
+				ss << rinterfaces[static_cast<InterfaceAttribute * const>(*j)->getInterface()];
 
 				xmlpp::Element *member = binding->add_child("member");
 				member->set_attribute("node", ss.str());
