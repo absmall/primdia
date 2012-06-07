@@ -1,26 +1,43 @@
 <?xml version="1.0"?>
 <diagram xmlns="http://smeagle.dyndns.org/primdia/diagram">
   <interfaces>
-    <interface type="Line" name="621839502"/>
+    <interface type="Line" name="1338809093"/>
+    <interface type="Line" name="54742018"/>
   </interfaces>
   <bindings>
+    <binding type="Bearing">
+      <member node="1338809093" attribute="Slope"/>
+    </binding>
+    <binding type="2D Point" value="(199.718, -23.0454)">
+      <member node="54742018" attribute="Point 2"/>
+    </binding>
     <binding type="Distance" value="1">
-      <member node="621839502" attribute="Width"/>
+      <member node="1338809093" attribute="Width"/>
     </binding>
-    <binding type="Distance">
-      <member node="621839502" attribute="Length"/>
+    <binding type="2D Point" value="(-182.891, 203.944)">
+      <member node="1338809093" attribute="Point 1"/>
     </binding>
-    <binding type="2D Point" value="(-12.9176, 157.824)">
-      <member node="621839502" attribute="Point 1"/>
-    </binding>
-    <binding type="Color" value="#000000FF">
-      <member node="621839502" attribute="Color"/>
+    <binding type="2D Point" value="(-69.6364, 15.496)">
+      <member node="1338809093" attribute="Point 2"/>
+      <member node="54742018" attribute="Point 1"/>
     </binding>
     <binding type="Bearing">
-      <member node="621839502" attribute="Slope"/>
+      <member node="54742018" attribute="Slope"/>
     </binding>
-    <binding type="2D Point" value="(133.767, 21.2388)">
-      <member node="621839502" attribute="Point 2"/>
+    <binding type="Distance">
+      <member node="54742018" attribute="Length"/>
+    </binding>
+    <binding type="Color" value="#000000FF">
+      <member node="54742018" attribute="Color"/>
+    </binding>
+    <binding type="Distance">
+      <member node="1338809093" attribute="Length"/>
+    </binding>
+    <binding type="Distance" value="1">
+      <member node="54742018" attribute="Width"/>
+    </binding>
+    <binding type="Color" value="#000000FF">
+      <member node="1338809093" attribute="Color"/>
     </binding>
   </bindings>
 </diagram>

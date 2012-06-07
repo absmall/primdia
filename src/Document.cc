@@ -76,7 +76,6 @@ void Document::load(const std::string &name)
 		PARSING_DIAGRAM,
 		PARSING_INTERFACES,
 		PARSING_INTERFACE,
-		PARSING_INTERFACE_NODE,
 		PARSING_BINDINGS,
 		PARSING_BINDING,
 		PARSING_BINDING_MEMBER
@@ -108,13 +107,6 @@ void Document::load(const std::string &name)
                             state = PARSING_INTERFACE;
                         }
                         break;
-                    case PARSING_INTERFACE:
-                        if( reader.get_name() == "node" ) {
-                            state = PARSING_INTERFACE_NODE;
-                        }
-                        break;
-                    case PARSING_INTERFACE_NODE:
-                        break;
                     case PARSING_BINDINGS:
                         if( reader.get_name() == "binding" ) {
                             state = PARSING_BINDING;
@@ -123,8 +115,14 @@ void Document::load(const std::string &name)
                     case PARSING_BINDING:
                         if( reader.get_name() == "member" ) {
                             state = PARSING_BINDING_MEMBER;
+                            reader.move_to_first_attribute();
+                            do {
+                                std::cout << "See attribute " << reader.get_name() << " is " << reader.get_value() << std::endl;
+                            } while(reader.move_to_next_attribute());
+                            reader.move_to_element();
                         }
                         break;
+                    case PARSING_INTERFACE:
                     case PARSING_BINDING_MEMBER:
                     default:
                         std::cout << "Unexpected open tag" << std::endl;
@@ -147,11 +145,6 @@ void Document::load(const std::string &name)
                             state = PARSING_INTERFACES;
                         }
                         break;
-                    case PARSING_INTERFACE_NODE:
-                        if( reader.get_name() == "node" ) {
-                            state = PARSING_INTERFACE;
-                        }
-                        break;
                     case PARSING_BINDINGS:
                         if( reader.get_name() == "bindings" ) {
                             state = PARSING_DIAGRAM;
@@ -160,6 +153,11 @@ void Document::load(const std::string &name)
                     case PARSING_BINDING:
                         if( reader.get_name() == "binding" ) {
                             state = PARSING_BINDINGS;
+                        }
+                        break;
+                    case PARSING_BINDING_MEMBER:
+                        if( reader.get_name() == "binding_member" ) {
+                            state = PARSING_BINDING;
                         }
                         break;
                     default:
