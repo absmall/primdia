@@ -343,7 +343,11 @@ const std::string &Tool::getName()
 
 Tool *Tool::getTool(const std::string &name)
 {
-	return tools[name];
+    map<std::string, Tool *>::iterator iter;
+    iter = tools.find(name);
+    if( iter == tools.end() ) return NULL;
+
+	return iter->second;
 }
 
 void Tool::Clear(void)

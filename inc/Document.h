@@ -88,6 +88,14 @@ public:
 	Interface *addNode(const Tool *type);
 
 	/**
+	 * Add a new aggregate to the document
+	 * @param type The tool to instantiate to produce the aggregate
+	 * @param name The name of the instance of the aggregate
+	 * @return A reference to the aggregate
+	 */
+	Interface *addNode(const Tool *type, const std::string &name);
+
+	/**
 	 * Retrieve the list of nodes in the document
 	 * @return The list of nodes
 	 */
