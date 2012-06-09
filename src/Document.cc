@@ -270,9 +270,9 @@ void Document::saveTool(const std::string &name)
 			binding->set_attribute("interface", (b->type->name+ss.str()));
 		}
 
-		if (i->second->hasSetValue())
+		if (b->hasSetValue())
 		{
-			binding->set_attribute("value", i->second->getValue()->getString().c_str());
+			binding->set_attribute("value", b->getValue()->getString().c_str());
 		}
 
 		foreach(j, b->attributes)
@@ -348,8 +348,9 @@ void Document::write_file(const std::string &name)
         ss << r;
 
 		xmlpp::Element *interface = interfaceRoot->add_child("interface");
-		interface->set_attribute("type", (*i)->getName().c_str());
-		interface->set_attribute("name", ss.str());
+		interface->set_attribute("type", (*i)->getType()->name.c_str());
+		interface->set_attribute("name", (*i)->getName().c_str());
+		interface->set_attribute("id", ss.str());
 
 		interfaces[r] = *i;
 		rinterfaces[*i] = r;
@@ -375,9 +376,9 @@ void Document::write_file(const std::string &name)
 		xmlpp::Element *binding = bindingRoot->add_child("binding");
 		binding->set_attribute("type", b->type->name.c_str());
 
-		if (i->second->hasSetValue())
+		if (b->hasSetValue())
 		{
-			binding->set_attribute("value", i->second->getValue()->getString().c_str());
+			binding->set_attribute("value", b->getValue()->getString().c_str());
 		}
 
 		foreach(j, b->attributes)

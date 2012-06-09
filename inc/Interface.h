@@ -44,6 +44,7 @@ public:
 	std::set<Node *> nodes;
 	std::set<Binding *> bindings;
 
+    const Tool *getType() const;
 private:
 	std::string name;
 	Document *doc;

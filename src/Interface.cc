@@ -155,3 +155,8 @@ void Interface::getBindings(std::set<Binding *> &bindings)
 		(*i)->getBindings(bindings);
 	}
 }
+
+const Tool *Interface::getType() const
+{
+    return type;
+}
