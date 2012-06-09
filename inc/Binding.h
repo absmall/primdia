@@ -25,6 +25,11 @@ public:
 	Binding(void);
 
 	/**
+	 * Default destructor
+	 */
+	~Binding();
+
+	/**
 	 * Create a new binding containing a single attribute. Every attribute must
 	 * participate in a binding at all times, so this is the standard method for
 	 * creating a binding for a new attribute.
@@ -142,11 +147,6 @@ public:
 	std::set<Attribute *> attributes;
 
 private:
-	/**
-	 * Default destructor
-	 */
-	~Binding();
-
 	/**
 	 * Propagate existence of a value through bindings. This is used
 	 * to test whether an overconstraint would result when a binding's

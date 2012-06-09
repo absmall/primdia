@@ -79,8 +79,10 @@ void Document::load(const std::string &name)
 		PARSING_BINDING,
 	} state;
 
+    Binding *b;
 	state = PARSING_NOTHING;
 	xmlpp::TextReader reader(name); 
+    map<string, Interface *> nodes;
 
 	while (reader.read())
 	{
@@ -104,6 +106,7 @@ void Document::load(const std::string &name)
                         if( reader.get_name() == "interface" ) {
                             string name;
                             string type;
+                            string id;
                             reader.move_to_first_attribute();
                             do {
                                 if( reader.get_name() == "type" ) {
@@ -112,30 +115,61 @@ void Document::load(const std::string &name)
                                 if( reader.get_name() == "name" ) {
                                     name = reader.get_value();
                                 }
+                                if( reader.get_name() == "id" ) {
+                                    id = reader.get_value();
+                                }
                                 std::cout << "See attribute " << reader.get_name() << " is " << reader.get_value() << std::endl;
                             } while(reader.move_to_next_attribute());
                             reader.move_to_element();
                             if( name != "" && type != "" ) {
                                 Tool *tool = Tool::getTool(type);
                                 if( tool ) {
-                                    addNode(tool, name);
+                                    nodes[id] = addNode(tool, name);
                                 }
                             }
                         }
                         break;
                     case PARSING_BINDINGS:
                         if( reader.get_name() == "binding" ) {
+                            string value;
                             state = PARSING_BINDING;
+                            b = new Binding();
+                            reader.move_to_first_attribute();
+                            do {
+                                std::cout << "See attribute " << reader.get_name() << " is " << reader.get_value() << std::endl;
+                                if( reader.get_name() == "value" ) {
+                                    value = reader.get_value();
+                                    //setValue(this, v);
+                                }
+                            } while(reader.move_to_next_attribute());
+                            reader.move_to_element();
                         }
                         break;
                     case PARSING_BINDING:
                         if( reader.get_name() == "member" ) {
-                            // TODO instantiate a binding
+                            string node;
+                            string attribute;
+                            string value;
+                            Interface *i;
+                            InterfaceAttribute *ia;
+
                             reader.move_to_first_attribute();
                             do {
                                 std::cout << "See attribute " << reader.get_name() << " is " << reader.get_value() << std::endl;
+                                if( reader.get_name() == "node" ) {
+                                    node = reader.get_value();
+                                }
+                                if( reader.get_name() == "attribute" ) {
+                                    attribute = reader.get_value();
+                                }
+                                if( reader.get_name() == "value" ) {
+                                    value = reader.get_value();
+                                }
                             } while(reader.move_to_next_attribute());
                             reader.move_to_element();
+                            i = nodes[node];
+                            ia = i->attributes[attribute];
+                            b->mergeAttribute(ia);
                         }
                         break;
                     default:
@@ -162,6 +196,10 @@ void Document::load(const std::string &name)
                     case PARSING_BINDING:
                         if( reader.get_name() == "binding" ) {
                             state = PARSING_BINDINGS;
+                            if( !b->type ) {
+                                // Binding was not used
+                                delete b;
+                            }
                         }
                         break;
                     default:
