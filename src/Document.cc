@@ -86,7 +86,6 @@ void Document::load(const std::string &name)
 
 	while (reader.read())
 	{
-        std::cout << "See name " << reader.get_name() << "(" << reader.get_node_type() << ")" << std::endl;
         switch(reader.get_node_type()) {
             case xmlpp::TextReader::Element:
                 switch(state) {
@@ -118,7 +117,6 @@ void Document::load(const std::string &name)
                                 if( reader.get_name() == "id" ) {
                                     id = reader.get_value();
                                 }
-                                std::cout << "See attribute " << reader.get_name() << " is " << reader.get_value() << std::endl;
                             } while(reader.move_to_next_attribute());
                             reader.move_to_element();
                             if( name != "" && type != "" ) {
@@ -131,17 +129,20 @@ void Document::load(const std::string &name)
                         break;
                     case PARSING_BINDINGS:
                         if( reader.get_name() == "binding" ) {
+                            string type;
                             string value;
                             state = PARSING_BINDING;
                             b = new Binding();
                             reader.move_to_first_attribute();
                             do {
-                                std::cout << "See attribute " << reader.get_name() << " is " << reader.get_value() << std::endl;
                                 if( reader.get_name() == "value" ) {
                                     value = reader.get_value();
-                                    //setValue(this, v);
+                                }
+                                if( reader.get_name() == "type" ) {
+                                    type = reader.get_value();
                                 }
                             } while(reader.move_to_next_attribute());
+                            b->setValue(this, Type::getType(type)->parse(value));
                             reader.move_to_element();
                         }
                         break;
@@ -155,7 +156,6 @@ void Document::load(const std::string &name)
 
                             reader.move_to_first_attribute();
                             do {
-                                std::cout << "See attribute " << reader.get_name() << " is " << reader.get_value() << std::endl;
                                 if( reader.get_name() == "node" ) {
                                     node = reader.get_value();
                                 }
