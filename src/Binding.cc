@@ -18,6 +18,7 @@ Binding::Binding(Document *document)
 	type = NULL;
 	derived = NULL;
 	value = NULL;
+    interfaceAttributes = 0;
     this->document = document;
 }
 
@@ -28,6 +29,11 @@ Binding::Binding(Document *document, Attribute *attr)
 	attributes.insert(attr);
 	value = NULL;
 	derived = false;
+    if( attr->getNode() ) {
+        interfaceAttributes = 0;
+    } else {
+        interfaceAttributes = 1;
+    }
     this->document = document;
 }
 
@@ -45,6 +51,7 @@ void Binding::removeAttribute(Attribute *attribute)
 	// Transfer any dependant bindings
 	if (attribute->getNode() == NULL)
 	{
+        interfaceAttributes --;
 		InterfaceAttribute *ia = static_cast<InterfaceAttribute *>(attribute);
 		foreach(i, ia->attributes)
 		{
@@ -87,6 +94,11 @@ void Binding::releaseAttribute(Attribute *attribute)
 	{
 		derived = NULL;
 	}
+    
+	if (attribute->getNode() == NULL)
+    {
+        interfaceAttributes --;
+    }
 
 	// If this is now empty, clear it
 	if (attributes.size() == 0)
@@ -100,6 +112,11 @@ void Binding::releaseAttribute(Attribute *attribute)
 const Value *Binding::getValue(void)
 {
 	return value;
+}
+
+int Binding::getInterfaceAttributes()
+{
+    return interfaceAttributes;
 }
 
 bool Binding::setValue(Document *doc, Value *v)
@@ -245,6 +262,7 @@ bool Binding::mergeAttribute(Attribute *attribute)
 			(*i)->value = NULL;
 			delete *i;
 		}
+        interfaceAttributes += oldBinding->interfaceAttributes;
 
 		return true;
 	} else {

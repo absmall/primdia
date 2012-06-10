@@ -148,6 +148,10 @@ public:
 	 */
 	std::set<Attribute *> attributes;
 
+    /**
+     * Retrieve the number of interface attributes in the binding
+     */
+    int getInterfaceAttributes();
 private:
 	/**
 	 * Propagate existence of a value through bindings. This is used
@@ -190,6 +194,11 @@ private:
      * The document to which the binding belongs
      */
     Document *document;
+
+    /**
+     * The number of interface attributes bound in the binding
+     */
+    int interfaceAttributes;
 };
 
 #endif /* __BINDING_H__ */

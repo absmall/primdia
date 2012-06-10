@@ -142,7 +142,9 @@ void Document::load(const std::string &name)
                                     type = reader.get_value();
                                 }
                             } while(reader.move_to_next_attribute());
-                            b->setValue(this, Type::getType(type)->parse(value));
+                            if( value != "" ) {
+                                b->setValue(this, Type::getType(type)->parse(value));
+                            }
                             reader.move_to_element();
                         }
                         break;
@@ -411,6 +413,10 @@ void Document::write_file(const std::string &name)
 	{
 		Binding *b = i->second;
 
+        // Skip default bindings (1 interface bound, no value)
+        if( b->getInterfaceAttributes() == 1 && !b->hasSetValue() ) {
+            continue;
+        }
 		xmlpp::Element *binding = bindingRoot->add_child("binding");
 		binding->set_attribute("type", b->type->name.c_str());
 
