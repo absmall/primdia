@@ -31,12 +31,12 @@ Interface::Interface(Document *doc, Interface *parent, std::string name, const T
 
 	foreach(i, type->interface)
 	{
-		attributes[i->name] = new InterfaceAttribute(this, Type::getType(i->type), i->name);
+		attributes[i->name] = new InterfaceAttribute(doc, this, Type::getType(i->type), i->name);
 	}
 
 	foreach(i, type->bindings)
 	{
-		Binding *b = new Binding();
+		Binding *b = new Binding(doc);
 		InterfaceAttribute *interface = NULL;
 		foreach(j, i->attributes)
 		{

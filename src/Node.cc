@@ -19,7 +19,7 @@ Node::Node(Document *doc, const std::string &s)
 	                            iter != type->getAttributeEnd();
 	                            iter ++)
 	{
-		attributes[iter->first] = new Attribute(this, iter->second, iter->first);
+		attributes[iter->first] = new Attribute(doc, this, iter->second, iter->first);
 	}
 
 	// Set whether the node is fully constrained

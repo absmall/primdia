@@ -12,7 +12,7 @@ class InterfaceAttribute : public Attribute
 	friend class Interface;
 	friend class Binding;
 public:
-	InterfaceAttribute(Interface *i, const Type *, const std::string &name);
+	InterfaceAttribute(Document *doc, Interface *i, const Type *, const std::string &name);
 
 	/**
 	 * Find what interface owns this attribute

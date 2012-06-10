@@ -2,11 +2,11 @@
 #include <Node.h>
 #include <Binding.h>
 
-Attribute::Attribute(Node *n, const Type *t, const std::string &name)
+Attribute::Attribute(Document *doc, Node *n, const Type *t, const std::string &name)
 {
 	node = n;
 	type = t;
-	binding = new Binding(this);
+	binding = new Binding(doc, this);
 	this->name = name;
 }
 

@@ -21,8 +21,9 @@ public:
 	/**
 	 * Construct a new empty binding. This should only be used for constructing
 	 * Interaces
+	 * @param document The document to which the binding belongs
 	 */
-	Binding(void);
+	Binding(Document *document);
 
 	/**
 	 * Default destructor
@@ -33,9 +34,10 @@ public:
 	 * Create a new binding containing a single attribute. Every attribute must
 	 * participate in a binding at all times, so this is the standard method for
 	 * creating a binding for a new attribute.
+	 * @param document The document to which the binding belongs
 	 * @param attr The attribute about which the binding will be constructed
 	 */
-	Binding(Attribute *attr);
+	Binding(Document *document, Attribute *attr);
 
 	/**
 	 * Remove an attribute from a binding. It and any hidden dependants will
@@ -183,6 +185,11 @@ private:
 	 * by the user, or derived from an edge
 	 */
 	Attribute *derived;
+
+    /**
+     * The document to which the binding belongs
+     */
+    Document *document;
 };
 
 #endif /* __BINDING_H__ */

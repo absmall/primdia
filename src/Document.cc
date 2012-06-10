@@ -132,7 +132,7 @@ void Document::load(const std::string &name)
                             string type;
                             string value;
                             state = PARSING_BINDING;
-                            b = new Binding();
+                            b = new Binding(this);
                             reader.move_to_first_attribute();
                             do {
                                 if( reader.get_name() == "value" ) {

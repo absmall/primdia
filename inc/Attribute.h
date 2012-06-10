@@ -19,11 +19,12 @@ public:
 	/**
 	 * A constructor. It will construct a new attribute and automatically
 	 * create a new binding for it.
+	 * @param doc The document to which the attribute belongs
 	 * @param n The node to which the attribute belongs
 	 * @param t The type of the attribute
 	 * @param name The name of the attribute
 	 */
-	Attribute(Node *n, const Type *t, const std::string &name);
+	Attribute(Document *doc, Node *n, const Type *t, const std::string &name);
 
 	/**
 	 * A destructor. This will release the attribute from its binding.

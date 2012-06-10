@@ -13,20 +13,22 @@
 
 using namespace std;
 
-Binding::Binding(void)
+Binding::Binding(Document *document)
 {
 	type = NULL;
 	derived = NULL;
 	value = NULL;
+    this->document = document;
 }
 
-Binding::Binding(Attribute *attr)
+Binding::Binding(Document *document, Attribute *attr)
 {
 	type = attr->getType();
 	attr->setBinding(this);
 	attributes.insert(attr);
 	value = NULL;
 	derived = false;
+    this->document = document;
 }
 
 void Binding::removeAttribute(Attribute *attribute)
@@ -37,7 +39,7 @@ void Binding::removeAttribute(Attribute *attribute)
 	attributes.erase(find(attributes.begin(), attributes.end(), attribute));
 
 	// Make a new one
-	Binding *b = new Binding(attribute);
+	Binding *b = new Binding(document, attribute);
 	attribute->setBinding(b);
 
 	// Transfer any dependant bindings
