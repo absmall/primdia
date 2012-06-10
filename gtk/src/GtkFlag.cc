@@ -33,10 +33,8 @@ void GtkFlagType::input(View *v, Binding *b) const
 
 	if (ret == GTK_RESPONSE_ACCEPT)
 	{
-		if (b->setValue(gtkv->document, new Flag(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check)))))
-		{
-			gtkv->document->update(Document::SetValue, NULL, NULL, b);
-		} else {
+		if (!b->setValue(gtkv->document, new Flag(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check)))))
+        {
 			GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, _("The binding could not be set. It overconstrains an object in the diagram."));
 			g_signal_connect_swapped (dialog, "response", G_CALLBACK (gtk_widget_destroy), dialog);
 			gtk_dialog_run(GTK_DIALOG(dialog));

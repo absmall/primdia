@@ -35,10 +35,8 @@ void GtkBearingType::input(View *v, Binding *b) const
 	gint ret = gtk_dialog_run(GTK_DIALOG(dialog));
 	if (ret == GTK_RESPONSE_ACCEPT)
 	{
-		if (b->setValue(gtkv->document, new Bearing(gtk_adjustment_get_value(adj))))
+		if (!b->setValue(gtkv->document, new Bearing(gtk_adjustment_get_value(adj))))
 		{
-			gtkv->document->update(Document::SetValue, NULL, NULL, b);
-		} else {
 			GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, _("The binding could not be set. It overconstrains an object in the diagram."));
 			g_signal_connect_swapped (dialog, "response", G_CALLBACK (gtk_widget_destroy), dialog);
 			gtk_dialog_run(GTK_DIALOG(dialog));

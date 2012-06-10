@@ -95,10 +95,8 @@ void GtkView::value_edited(GtkCellRendererText *cellRenderer, gchar *path_string
 	attribute = (Attribute *)attr;
 
 	Value *v = attribute->getType()->parse(std::string(value));
-	if (attribute->getBinding()->setValue(gtkv->document, v))
+	if (!attribute->getBinding()->setValue(gtkv->document, v))
 	{
-		gtkv->document->update(Document::SetValue, NULL, NULL, attribute->getBinding());
-	} else {
 		GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, _("The binding could not be set. It overconstrains an object in the diagram."));
 		g_signal_connect_swapped (dialog, "response", G_CALLBACK (gtk_widget_destroy), dialog);
 		gtk_dialog_run(GTK_DIALOG(dialog));
@@ -303,7 +301,7 @@ gboolean GtkView::select_point(GtkWidget *widget, GdkEventButton *event, gpointe
 	double y = event->y;
 	view->canvas->toCanvas(&x, &y);
 	notify(view->document, x, y, handler.second);
-	view->document->update(Document::SetValue, NULL, NULL, (Binding *)handler.second);
+	//view->document->update(Document::SetValue, NULL, NULL, (Binding *)handler.second);
 	gtk_statusbar_pop(view->statusbar, gtk_statusbar_get_context_id(view->statusbar, "Retrieve Point"));
 	view->settingValue = false;
 	g_signal_handler_disconnect(view->canvas->getCairoWidget(), handler.first);

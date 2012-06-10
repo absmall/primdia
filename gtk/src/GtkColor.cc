@@ -44,13 +44,11 @@ void GtkColorType::input(View *v, Binding *b) const
 		GdkColor color;
 		double alpha = gtk_color_selection_get_current_alpha(colorsel);
 		gtk_color_selection_get_current_color(colorsel, &color);
-		if (b->setValue(gtkv->document, new Color((unsigned char)scale_round(color.red/65535.0, 255),
+		if (!b->setValue(gtkv->document, new Color((unsigned char)scale_round(color.red/65535.0, 255),
 						(unsigned char)scale_round(color.green/65535.0,255),
 						(unsigned char)scale_round(color.blue/65535.0,255),
 						(unsigned char)scale_round(alpha/65535.0,255))))
 		{
-			gtkv->document->update(Document::SetValue, NULL, NULL, b);
-		} else {
 			GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, _("The binding could not be set. It overconstrains an object in the diagram."));
 			g_signal_connect_swapped (dialog, "response", G_CALLBACK (gtk_widget_destroy), dialog);
 			gtk_dialog_run(GTK_DIALOG(dialog));

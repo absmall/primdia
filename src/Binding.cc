@@ -104,6 +104,7 @@ const Value *Binding::getValue(void)
 
 bool Binding::setValue(Document *doc, Value *v)
 {
+    bool ret;
 	if (derived)
 	{
 		// It is always an error to assign to a binding
@@ -119,11 +120,19 @@ bool Binding::setValue(Document *doc, Value *v)
 
 		propagate();
 
+        document->update(Document::SetValue, NULL, NULL, this);
+
 		return true;
 	} else {
 		value = v;
 
-		return propagate();
+		ret = propagate();
+
+        if( ret ) {
+            document->update(Document::SetValue, NULL, NULL, this);
+        }
+
+        return ret;
 	}
 }
 

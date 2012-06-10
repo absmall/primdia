@@ -21,10 +21,8 @@ void GtkFontType::input(View *v, Binding *b) const
 	gint ret = gtk_dialog_run(GTK_DIALOG(dialog));
 	if (ret == GTK_RESPONSE_OK)
 	{
-		if (b->setValue(gtkv->document, new Font(gtk_font_chooser_get_font(GTK_FONT_CHOOSER(dialog)))))
+		if (!b->setValue(gtkv->document, new Font(gtk_font_chooser_get_font(GTK_FONT_CHOOSER(dialog)))))
 		{
-			gtkv->document->update(Document::SetValue, NULL, NULL, b);
-		} else {
 			GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, _("The binding could not be set. It overconstrains an object in the diagram."));
 			g_signal_connect_swapped (dialog, "response", G_CALLBACK (gtk_widget_destroy), dialog);
 			gtk_dialog_run(GTK_DIALOG(dialog));
