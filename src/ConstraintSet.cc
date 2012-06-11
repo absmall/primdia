@@ -9,7 +9,7 @@ ConstraintSet::ConstraintSet()
 {
 }
 
-ConstraintSet::ConstraintSet(Value *(*rv)(const Node *n, const std::string &name))
+ConstraintSet::ConstraintSet(Value *(*rv)(const Node *n, const std::string &name, const View *view))
 {
 	retrieveValue = rv;
 }

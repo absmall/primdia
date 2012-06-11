@@ -43,7 +43,7 @@ ArcClass::~ArcClass()
 {
 }
 
-Value *solveA(const Node *n, const std::string &name)
+Value *solveA(const Node *n, const std::string &name, const View *view)
 {
 	throw std::string("No member ") + name + std::string(" in Point");
 }

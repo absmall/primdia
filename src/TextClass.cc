@@ -46,7 +46,7 @@ TextClass::~TextClass()
 {
 }
 
-Value *solveTLBR(const Node *n, const std::string &name)
+Value *solveTLBR(const Node *n, const std::string &name, const View *view)
 {
 	int width, height;
 
@@ -64,7 +64,7 @@ Value *solveTLBR(const Node *n, const std::string &name)
 	}
 }
 
-Value *solveTRBL(const Node *n, const std::string &name)
+Value *solveTRBL(const Node *n, const std::string &name, const View *view)
 {
 	int width, height;
 

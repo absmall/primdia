@@ -41,8 +41,6 @@ public:
 	 */
 	void getBindings(std::set<Binding *> &bindings);
 
-	const Value *calcValue(const std::string &name) const;
-
 	const Value *calcValue(const std::string &name, const View *view) const;
 
 	void render(View *canvas);

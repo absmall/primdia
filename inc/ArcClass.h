@@ -15,6 +15,6 @@ public:
 private:
 };
 
-Value *solveA(const Node *, const std::string &name);
+Value *solveA(const Node *, const std::string &name, const View *view);
 
 #endif /* __ARCCLASS_H__ */

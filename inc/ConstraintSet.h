@@ -17,7 +17,7 @@ public:
 	};
 
 	ConstraintSet();
-	ConstraintSet(Value *(*)(const Node *, const std::string &name));
+	ConstraintSet(Value *(*)(const Node *, const std::string &name, const View *view));
 	std::string name;
 	std::list<std::string> data;
 	void addConstraint(const std::string &a);
@@ -26,8 +26,7 @@ public:
 
 	// This would be better as a member function pointer, but cannot be
 	// until gcc bug 8171 is resolved.
-	Value *(*retrieveValue)(const Node *, const std::string &name);
-	Value *(*retrieveValueView)(const Node *, const std::string &name, const View *view);
+	Value *(*retrieveValue)(const Node *, const std::string &name, const View *vew);
 	bool operator<(const ConstraintSet &) const;
 };
 

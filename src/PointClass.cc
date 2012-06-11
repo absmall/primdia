@@ -36,7 +36,7 @@ PointClass::~PointClass()
 {
 }
 
-Value *solveP(const Node *n, const std::string &name)
+Value *solveP(const Node *n, const std::string &name, const View *view)
 {
 	throw std::string("No member ") + name + std::string(" in Point");
 }

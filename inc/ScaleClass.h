@@ -13,9 +13,9 @@ public:
 	virtual ~ScaleClass()=0;
 };
 
-Value *solveSE(const Node *, const std::string &name);
-Value *solveSC(const Node *, const std::string &name);
-Value *solveCE(const Node *, const std::string &name);
-Value *solve3P(const Node *, const std::string &name);
+Value *solveSE(const Node *, const std::string &name, const View *view);
+Value *solveSC(const Node *, const std::string &name, const View *view);
+Value *solveCE(const Node *, const std::string &name, const View *view);
+Value *solve3P(const Node *, const std::string &name, const View *view);
 
 #endif /* __SCALECLASS_H__ */

@@ -147,6 +147,11 @@ public:
 	 */
 	bool isModified(void) const;
 
+    /**
+     *
+     */
+    View *primaryView() const;
+
 private:
 	static void updateDocumentList();
 	std::string makeTemporaryDocumentName();

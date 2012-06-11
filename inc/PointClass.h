@@ -15,6 +15,6 @@ public:
 private:
 };
 
-Value *solveP(const Node *, const std::string &name);
+Value *solveP(const Node *, const std::string &name, const View *view);
 
 #endif /* __POINTCLASS_H__ */

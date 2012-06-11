@@ -60,7 +60,7 @@ LineClass::~LineClass()
 {
 }
 
-Value *solvePP(const Node *n, const std::string &name)
+Value *solvePP(const Node *n, const std::string &name, const View *view)
 {
 	Point2D *p1 = (Point2D *)n->getValue("Point 1");
 	Point2D *p2 = (Point2D *)n->getValue("Point 2");
@@ -83,7 +83,7 @@ Value *solvePP(const Node *n, const std::string &name)
 	}
 }
 
-Value *solveP1LA(const Node *n, const std::string &name)
+Value *solveP1LA(const Node *n, const std::string &name, const View *view)
 {
 	Point2D *p1 = (Point2D *)n->getValue("Point 1");
 	Distance *l = (Distance *)n->getValue("Length");
@@ -98,7 +98,7 @@ Value *solveP1LA(const Node *n, const std::string &name)
 	}
 }
 
-Value *solveP2LA(const Node *n, const std::string &name)
+Value *solveP2LA(const Node *n, const std::string &name, const View *view)
 {
 	Point2D *p2 = (Point2D *)n->getValue("Point 2");
 	Distance *l = (Distance *)n->getValue("Length");

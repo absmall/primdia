@@ -26,7 +26,7 @@ void Primitive::addAttribute(const std::string &name, const Type *t)
 	attributes.insert(pair<const std::string, const Type *>(name, t));
 }
 
-ConstraintSet &Primitive::createConstraintSubset(Value *(*completer)(const Node *, const std::string &))
+ConstraintSet &Primitive::createConstraintSubset(Value *(*completer)(const Node *, const std::string &, const View *))
 {
 	completions.push_back(ConstraintSet(completer));
 	return completions.back();

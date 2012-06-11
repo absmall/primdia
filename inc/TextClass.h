@@ -15,7 +15,7 @@ public:
 private:
 };
 
-Value *solveTLBR(const Node *, const std::string &name);
-Value *solveTRBL(const Node *, const std::string &name);
+Value *solveTLBR(const Node *, const std::string &name, const View *view);
+Value *solveTRBL(const Node *, const std::string &name, const View *view);
 
 #endif /* __TEXTCLASS_H__ */

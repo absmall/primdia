@@ -81,14 +81,9 @@ void Node::getBindings(std::set<Binding *> &bindings)
 	}
 }
 
-const Value *Node::calcValue(const std::string &name) const
-{
-	return current_completion->retrieveValue(this, name);
-}
-
 const Value *Node::calcValue(const std::string &name, const View *view) const
 {
-	return current_completion->retrieveValueView(this, name, view);
+	return current_completion->retrieveValue(this, name, view);
 }
 
 bool Node::testUpdate(std::map<Binding *, Attribute *> &bindings)
@@ -247,7 +242,7 @@ bool Node::update()
 				 current_completion->data.end(),
 				 i->first) == current_completion->data.end())
 			{
-                Value *v = current_completion->retrieveValue(this, i->first);
+                Value *v = current_completion->retrieveValue(this, i->first, d->primaryView());
                 Binding *b = i->second->getBinding();
                 if (b->getValue() == NULL || *b->getValue() != *v)
                 {

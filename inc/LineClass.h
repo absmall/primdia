@@ -15,8 +15,8 @@ public:
 private:
 };
 
-Value *solvePP(const Node *, const std::string &name);
-Value *solveP1LA(const Node *, const std::string &name);
-Value *solveP2LA(const Node *, const std::string &name);
+Value *solvePP(const Node *, const std::string &name, const View *view);
+Value *solveP1LA(const Node *, const std::string &name, const View *view);
+Value *solveP2LA(const Node *, const std::string &name, const View *view);
 
 #endif /* __LINECLASS_H__ */

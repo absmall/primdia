@@ -43,7 +43,7 @@ ScaleClass::~ScaleClass()
 {
 }
 
-Value *solveSE(const Node *n, const std::string &name)
+Value *solveSE(const Node *n, const std::string &name, const View *view)
 {
 	Point2D *p1 = (Point2D *)n->getValue("Point 1");
 	Point2D *p2 = (Point2D *)n->getValue("Point 2");
@@ -58,7 +58,7 @@ Value *solveSE(const Node *n, const std::string &name)
 	}
 }
 
-Value *solveSC(const Node *n, const std::string &name)
+Value *solveSC(const Node *n, const std::string &name, const View *view)
 {
 	Point2D *p1 = (Point2D *)n->getValue("Point 1");
 	Point2D *p2 = (Point2D *)n->getValue("Combination");
@@ -73,7 +73,7 @@ Value *solveSC(const Node *n, const std::string &name)
 	}
 }
 
-Value *solveCE(const Node *n, const std::string &name)
+Value *solveCE(const Node *n, const std::string &name, const View *view)
 {
 	Point2D *p1 = (Point2D *)n->getValue("Combination");
 	Point2D *p2 = (Point2D *)n->getValue("Point 2");

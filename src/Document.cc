@@ -337,6 +337,15 @@ bool Document::isModified(void) const
 	return modified;
 }
 
+View *Document::primaryView() const
+{
+    if(views.begin() != views.end()) {
+        return *views.begin();
+    } else {
+        return NULL;
+    }
+}
+
 void Document::updateDocumentList()
 {
 	foreach(i, documentList)

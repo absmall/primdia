@@ -104,7 +104,8 @@ protected:
 	 *                  unset attributes once the node is constrained
 	 */
 	ConstraintSet &createConstraintSubset(Value *(*completer)(const Node *,
-	                                                          const std::string &));
+	                                                          const std::string &,
+                                                              const View *));
 
 	/**
 	 * Return an iterator to the start of the primitive's attribute list
