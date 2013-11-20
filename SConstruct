@@ -158,6 +158,7 @@ if(env.get('UI') == 'gtk'):
 if(env.get('UI') == 'console'):
 	uiEnv.Append(LIBS=['readline'])
 uiEnv.Append(CPPPATH=['${UI}/inc'])
+uiEnv.Append(RPATH='.')
 uiSrcFiles = Glob(env.get('UI')+'/src/*.cc')
 
 ###################
