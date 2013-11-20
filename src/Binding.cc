@@ -17,7 +17,8 @@ Binding::Binding(Document *document)
 {
 	type = NULL;
 	derived = NULL;
-	value = NULL;
+    has_value = false;
+    set_value = NULL;
     interfaceAttributes = 0;
     this->document = document;
 }
@@ -27,8 +28,9 @@ Binding::Binding(Document *document, Attribute *attr)
 	type = attr->getType();
 	attr->setBinding(this);
 	attributes.insert(attr);
-	value = NULL;
-	derived = false;
+	has_value = false;
+	derived = NULL;
+    set_value = NULL;
     if( attr->getNode() ) {
         interfaceAttributes = 0;
     } else {
@@ -63,16 +65,20 @@ void Binding::removeAttribute(Attribute *attribute)
 			if (derived == *i)
 			{
 				derived = NULL;
-				delete value;
-				value = NULL;
+                for(map<const View *, const Value *>::const_iterator i = value.begin(); i != value.end(); i ++ ) {
+                    delete i->second;
+                }
+				has_value = false;
 			}
 		}
 	}
 
-	if (derived == NULL && value != NULL)
+	if (derived == NULL && has_value)
 	{
 		// It's a set value, so copy it over
-		b->value = value->copy();
+        for(map<const View *, const Value *>::iterator i = value.begin(); i != value.end(); i ++ ) {
+            b->value[i->first] = i->second->copy();
+        }
 	}
 
 	propagate();
@@ -109,9 +115,26 @@ void Binding::releaseAttribute(Attribute *attribute)
 	}
 }
 
-const Value *Binding::getValue(void)
+const Value *Binding::getValue()
 {
-	return value;
+    if( set_value != NULL ) {
+        return set_value;
+    } else {
+        return NULL;
+    }
+}
+
+const Value *Binding::getValue(const View *view)
+{
+    if( has_value ) {
+        if( set_value != NULL ) {
+            return set_value;
+        } else {
+            return value[view];
+        }
+    } else {
+        return NULL;
+    }
 }
 
 int Binding::getInterfaceAttributes()
@@ -129,11 +152,14 @@ bool Binding::setValue(Document *doc, Value *v)
 		return false;
 	}
 
-	if (value)
+	if (has_value)
 	{
 		// We already have a value. Just swap it out and propagate from here
-		delete value;
-		value = v;
+        foreach(i, document->getViews()) {
+            delete value[*i];
+            value[*i] = v->copy();
+        }
+        delete v;
 
 		propagate();
 
@@ -141,7 +167,44 @@ bool Binding::setValue(Document *doc, Value *v)
 
 		return true;
 	} else {
-		value = v;
+        foreach(i, document->getViews()) {
+            value[*i] = v->copy();
+        }
+        delete v;
+
+		ret = propagate();
+
+        if( ret ) {
+            document->update(Document::SetValue, NULL, NULL, this);
+        }
+
+        return ret;
+	}
+}
+
+bool Binding::setValue(Document *doc, Value *v, const View *view)
+{
+    bool ret;
+	if (derived)
+	{
+		// It is always an error to assign to a binding
+		// with value from elsewhere.
+		return false;
+	}
+
+	if (has_value)
+	{
+		// We already have a value. Just swap it out and propagate from here
+		delete value[view];
+		value[view] = v;
+
+		propagate();
+
+        document->update(Document::SetValue, NULL, NULL, this);
+
+		return true;
+	} else {
+		value[view] = v;
 
 		ret = propagate();
 
@@ -166,14 +229,14 @@ bool Binding::unsetValue(Document *doc, Attribute *attr)
 	// It's always safe to unconstrain a binding,
 	// since that can never cause an overconstraint
 	// situation.
-	if (value != NULL)
+	if (has_value)
 	{
 		// We were constrained and are no longer.
 		// take note of the fact and propagate the
 		// lack of value. This may underconstrain
 		// some nodes.
 
-		value = NULL;
+		has_value = false;
 		derived = NULL;
 
 		propagate();
@@ -184,22 +247,22 @@ bool Binding::unsetValue(Document *doc, Attribute *attr)
 
 bool Binding::isSet(Attribute *attr) const
 {
-	return value != NULL && derived != attr;
+	return has_value && derived != attr;
 }
 
 bool Binding::hasValue() const
 {
-	return value != NULL;
+	return has_value;
 }
 
 bool Binding::hasSetValue() const
 {
-	return value != NULL && derived == NULL;
+	return has_value && derived == NULL;
 }
 
 bool Binding::testValue(Attribute *setter)
 {
-	if (value)
+	if (has_value)
 	{
 		// Can never set something that already has a value
 		return false;
@@ -225,15 +288,15 @@ bool Binding::mergeAttribute(Attribute *attribute)
 	}
 
 	// Make sure they don't both have values
-	if (value != NULL)
+	if (has_value)
 	{
-		if (attribute->getBinding()->value != NULL)
+		if (attribute->getBinding()->has_value)
 		{
 			// They both have values. Fail.
 			return false;
 		}
 	} else {
-		if (attribute->getBinding()->value != NULL)
+		if (attribute->getBinding()->has_value)
 		{
 			// The other one's got a value, use it
 			value = attribute->getBinding()->value;
@@ -259,7 +322,9 @@ bool Binding::mergeAttribute(Attribute *attribute)
 	{
 		foreach(i, old_bindings)
 		{
-			(*i)->value = NULL;
+            foreach(j, (*i)->value) {
+                delete j->second;
+            }
 			delete *i;
 		}
         interfaceAttributes += oldBinding->interfaceAttributes;
@@ -280,21 +345,25 @@ bool Binding::mergeAttribute(Attribute *attribute)
 
 bool Binding::setValue(Value *v, Attribute *attr)
 {
-	if (value != NULL && derived != attr)
+	if (has_value && derived != attr)
 	{
 		// It is always an error to assign to a binding
 		// with value from elsewhere.
 		return false;
 	}
 
-	if (value)
+	if (has_value)
 	{
 		// We already have a value, so clear it first.
-		delete value;
+        foreach(i, value) {
+            delete i->second;
+        }
 	}
 
 	derived = attr;
-	value = v;
+    foreach(i, value) {
+        i->second = v->copy();
+    }
 	if( propagate()) {
 		return true;
 	} else {
@@ -315,9 +384,11 @@ void Binding::getBindings(std::set<Binding *> &bindings)
 
 Binding::~Binding(void)
 {
-	if (value != NULL)
+	if (has_value)
 	{
-		delete value;
+        foreach(i, value) {
+            delete i->second;
+        }
 	}
 }
 

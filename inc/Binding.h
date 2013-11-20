@@ -58,7 +58,14 @@ public:
 	 * Retrieve the value from a binding.
 	 * @return The value of the binding. May be NULL.
 	 */
-	const Value *getValue(void);
+	const Value *getValue(const View *view);
+
+	/**
+	 * Retrieve the value from a binding with a set value
+	 * @return The value of the binding. May be NULL if the
+     * binding does not have a set value
+	 */
+	const Value *getValue();
 
 	/**
 	 * Set the value from a binding
@@ -67,6 +74,14 @@ public:
 	 * @return true if the value could be set, false otherwise
 	 */
 	bool setValue(Document *doc, Value *v);
+
+	/**
+	 * Set the value from a binding
+	 * @param doc The document of the value. Callbacks will be passed there
+	 * @param v The new value to set
+	 * @return true if the value could be set, false otherwise
+	 */
+	bool setValue(Document *doc, Value *v, const View *view);
 
 	/**
 	 * Remove the value from a binding.
@@ -178,11 +193,21 @@ private:
 	 */
 	bool uses_view;
 
+    /**
+     * The set value if the binding has a set value. This is
+     * common to all views
+     */
+    const Value *set_value;
+
 	/**
-	 * The common value of the attributes of this binding.
-	 * It may be NULL
+	 * The common value of the attributes of this binding in each view.
 	 */
-	const Value *value;
+	std::map<const View *, const Value *> value;
+
+    /**
+     * Whether value is set for each view
+     */
+    bool has_value;
 
 	/**
 	 * Indicates whether the value for this binding was set

@@ -242,13 +242,16 @@ bool Node::update()
 				 current_completion->data.end(),
 				 i->first) == current_completion->data.end())
 			{
-                Value *v = current_completion->retrieveValue(this, i->first, d->primaryView());
-                Binding *b = i->second->getBinding();
-                if (b->getValue() == NULL || *b->getValue() != *v)
-                {
-                    i->second->getBinding()->setValue(v, i->second);
-                } else {
-                    delete v;
+                foreach(view, d->getViews()) {
+                    Value *v = current_completion->retrieveValue(this, i->first, *view);
+                    Binding *b = i->second->getBinding();
+                    // todo check out the second check, not sure this is right
+                    if (b->getValue(*view) == NULL || *b->getValue(*view) != *v)
+                    {
+                        i->second->getBinding()->setValue(v, i->second);
+                    } else {
+                        delete v;
+                    }
                 }
 			}
 		}
