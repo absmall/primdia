@@ -1,0 +1,7 @@
+*.os
+*.o
+.sconsign.dblite
+.sconf_temp
+libprimdia.so
+primitive-diagrammer
+po/*.mo
