@@ -687,8 +687,6 @@ void GtkView::initialize()
 	GtkWidget *menu4;
 	GtkWidget *about;
 	GtkWidget *hbox1;
-	GtkWidget *handlebox1;
-	GtkWidget *handlebox2;
 	GtkWidget *node_list;
 	GtkWidget *scrollview;
 	GtkAdjustment *hadj;
@@ -790,17 +788,12 @@ void GtkView::initialize()
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox1), GTK_WIDGET(hbox1), TRUE, TRUE, 0);
 
-	handlebox1 = gtk_handle_box_new();
-	gtk_handle_box_set_handle_position(GTK_HANDLE_BOX(handlebox1), GTK_POS_TOP);
-	gtk_widget_show(handlebox1);
-	gtk_box_pack_start (GTK_BOX (hbox1), GTK_WIDGET(handlebox1), FALSE, FALSE, 0);
-
 	toolbar = gtk_toolbar_new ();
 	gtk_orientable_set_orientation (GTK_ORIENTABLE (toolbar), GTK_ORIENTATION_VERTICAL);
 	gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
 	gtk_container_set_border_width (GTK_CONTAINER (toolbar), 5);
 	gtk_widget_show(toolbar);
-	gtk_container_add(GTK_CONTAINER (handlebox1), toolbar);
+	gtk_container_add(GTK_CONTAINER (hbox1), toolbar);
 
 	for(map<std::string,Tool *>::iterator i = Tool::begin(); i != Tool::end(); i++)
 	{
@@ -835,12 +828,6 @@ void GtkView::initialize()
 	int height = g_settings_get_int(client, "height");
 
 	gtk_window_set_default_size(GTK_WINDOW(window), width, height);
-
-
-	handlebox2 = gtk_handle_box_new ();
-	gtk_handle_box_set_handle_position(GTK_HANDLE_BOX(handlebox2), GTK_POS_TOP);
-	gtk_widget_show(handlebox2);
-	gtk_paned_add2(GTK_PANED(pane), GTK_WIDGET(handlebox2));
 
 	hadj = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, 0.0, 500.0, 1, 1, 50));
 	vadj = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, 0.0, 65536.0, 1, 1, 10));
@@ -890,7 +877,7 @@ void GtkView::initialize()
 	g_signal_connect(renderer, "toggled", G_CALLBACK(bound_edited), this);
 
 	gtk_widget_show(node_list);
-	gtk_container_add(GTK_CONTAINER (handlebox2), scrollview);
+	gtk_container_add(GTK_CONTAINER (pane), scrollview);
 	gtk_container_add(GTK_CONTAINER (scrollview), node_list);
 
 	statusbar = GTK_STATUSBAR(gtk_statusbar_new());
