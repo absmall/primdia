@@ -1,10 +1,13 @@
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 #include <readline/readline.h>
 
 #include <Primitive.h>
 
 using namespace std;
+
+bool help(char *args);
 
 bool quit(char *args)
 {
@@ -16,9 +19,20 @@ struct command
 	const char *name;
 	bool (*parser)(char *args);
 } commands[] = {
+	{ "help", help },
 	{ "exit", quit },
 	{ "quit", quit }
 };
+
+bool help(char *args)
+{
+    int i;
+    printf("Available commands:\n");
+    for(i = 0; i < sizeof(commands)/sizeof(command); i ++ ) {
+        printf("%s\n", commands[i]);
+    }
+    return true;
+}
 
 bool process_command(char *command)
 {
