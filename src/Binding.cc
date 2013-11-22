@@ -155,11 +155,14 @@ bool Binding::setValue(Document *doc, Value *v)
 	if (has_value)
 	{
 		// We already have a value. Just swap it out and propagate from here
-        foreach(i, document->getViews()) {
-            delete value[*i];
-            value[*i] = v->copy();
+        if( set_value ) {
+            delete set_value;
+        } else {
+            foreach(i, document->getViews()) {
+                delete value[*i];
+            }
         }
-        delete v;
+        set_value = v;
 
 		propagate();
 
@@ -167,15 +170,13 @@ bool Binding::setValue(Document *doc, Value *v)
 
 		return true;
 	} else {
-        foreach(i, document->getViews()) {
-            value[*i] = v->copy();
-        }
-        delete v;
+        set_value = v;
 
 		ret = propagate();
 
         if( ret ) {
             document->update(Document::SetValue, NULL, NULL, this);
+            has_value = true;
         }
 
         return ret;
