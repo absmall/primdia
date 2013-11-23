@@ -2,6 +2,7 @@
 *.o
 .sconsign.dblite
 .sconf_temp
+custom.py
 libprimdia.so
 primitive-diagrammer
 po/*.mo

@@ -203,3 +203,5 @@ if(env.get('gettext')):
 	    env.Alias('install', env.InstallAs(os.path.join('$prefix', 
 	'share/locale/' + lang + '/LC_MESSAGES/' + packageSafeName + '.mo'), 'po/' + lang 
 	+ '.mo'))
+
+vars.Save('custom.py', configEnv)
