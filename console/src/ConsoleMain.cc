@@ -2,6 +2,7 @@
 #include <string>
 #include <stdlib.h>
 #include <readline/readline.h>
+#include <readline/history.h>
 
 #include <Primitive.h>
 
@@ -61,7 +62,13 @@ void process_commands()
 	while( !done ) {
 		response = readline("primdia>");
 		if( response ) {
-			if (!process_command (response)) done = true;
+			if (process_command (response)) {
+                if( *response ) {
+                    add_history(response);
+                }
+            } else {
+                done = true;
+            }
 			free( response );
 		} else {
 			done = true;
