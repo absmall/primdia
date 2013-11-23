@@ -158,7 +158,8 @@ if(env.get('UI') == 'gtk'):
 if(env.get('UI') == 'console'):
 	uiEnv.Append(LIBS=['readline'])
 uiEnv.Append(CPPPATH=['${UI}/inc'])
-uiEnv.Append(RPATH='.')
+uiEnv.Append( LINKFLAGS = Split('-z origin') )
+uiEnv.Append( RPATH = env.Literal(os.path.join('\\$$ORIGIN', os.pardir, 'lib')))
 uiSrcFiles = Glob(env.get('UI')+'/src/*.cc')
 
 ###################
@@ -166,8 +167,8 @@ uiSrcFiles = Glob(env.get('UI')+'/src/*.cc')
 ###################
  
 # Main program
-lib = env.SharedLibrary('primdia', srcFiles)
-app = uiEnv.Program(safename(packageName), [lib, uiSrcFiles])
+lib = env.SharedLibrary('lib/primdia', srcFiles)
+app = uiEnv.Program('bin/'+safename(packageName), [lib, uiSrcFiles])
 env.Install('$prefix/lib', lib)
 env.Install('$prefix/bin', app)
 Default(app)
