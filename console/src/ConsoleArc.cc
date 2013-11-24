@@ -5,9 +5,9 @@
 #include <Distance.h>
 #include <Bearing.h>
 #include <Color.h>
-#include <GtkView.h>
-#include <GtkCanvas.h>
 #include <ArcType.h>
+
+using namespace std;
 
 void ArcType::render(View *canvas, const Node *n) const
 {
@@ -18,21 +18,7 @@ void ArcType::render(View *canvas, const Node *n) const
 	const Color *color = (const Color *)(n->getValue("Color"));
 	const Distance *width = (const Distance *)(n->getValue("Width"));
 
-	cairo_t *c = ((GtkView *)canvas)->canvas->getCairoContext();
-
-	// move to coord in plane
-	cairo_move_to(c, p->getX(), p->getY());
-	cairo_new_sub_path(c);
-	cairo_set_source_rgba(c,
-	                      color->getRed(),
-	                      color->getGreen(),
-	                      color->getBlue(),
-	                      color->getAlpha());
-	// draw the point
-	cairo_arc(c, p->getX(), p->getY(), r->getDistance(), angle1->getAngle(), angle2->getAngle());
-	cairo_set_line_width(c, width->getDistance());
-	// display the point
-	cairo_stroke(c);
+    cout << "Arc from (" << p->getX() << ", " << p->getY() << ") " << angle1->getAngle() << " to " << angle2->getAngle() << endl;
 }
 
 bool ArcType::boundingBox(View *canvas, const Node *n,

@@ -7,8 +7,10 @@
 #include <Bearing.h>
 #include <Point2D.h>
 #include <Distance.h>
-#include <LineClass.h>
+#include <LineType.h>
 #include <ConstraintSet.h>
+
+static LineType instance;
 
 using namespace std;
 

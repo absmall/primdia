@@ -2,8 +2,10 @@
 #include <Type.h>
 #include <Value.h>
 #include <Point2D.h>
-#include <PointClass.h>
+#include <PointType.h>
 #include <ConstraintSet.h>
+
+static PointType instance;
 
 using namespace std;
 

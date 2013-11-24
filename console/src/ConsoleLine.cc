@@ -1,12 +1,11 @@
-#include <algorithm>
-
 #include <Node.h>
 #include <Color.h>
-#include <GtkView.h>
 #include <Point2D.h>
 #include <LineType.h>
-#include <GtkCanvas.h>
 #include <Distance.h>
+#include <iostream>
+
+using namespace std;
 
 void LineType::render(View *canvas, const Node *n) const
 {
@@ -15,17 +14,7 @@ void LineType::render(View *canvas, const Node *n) const
 	const Color *color = (const Color *)(n->getValue("Color"));
 	const Distance *width = (const Distance *)(n->getValue("Width"));
 
-	cairo_t *c = ((GtkView *)canvas)->canvas->getCairoContext();
-
-	cairo_move_to(c, p1->getX(), p1->getY());
-	cairo_line_to(c, p2->getX(), p2->getY());
-	cairo_set_source_rgba(c,
-	                      color->getRed(),
-	                      color->getGreen(),
-	                      color->getBlue(),
-	                      color->getAlpha());
-	cairo_set_line_width(c, width->getDistance());
-	cairo_stroke (c);
+    cout << "(" << p1->getX() << ", " << p1->getY() << ")-(" << p2->getX() << ", " << p2->getY() << ")" << endl;
 }
 
 bool LineType::boundingBox(View *canvas, const Node *n,

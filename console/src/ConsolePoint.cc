@@ -1,12 +1,11 @@
-#include <math.h>
-
 #include <Node.h>
-#include <GtkView.h>
 #include <Point2D.h>
 #include <Color.h>
 #include <Distance.h>
 #include <PointType.h>
-#include <GtkCanvas.h>
+#include <iostream>
+
+using namespace std;
 
 void PointType::render(View *canvas, const Node *n) const
 {
@@ -14,24 +13,7 @@ void PointType::render(View *canvas, const Node *n) const
 	const Distance *r = (const Distance *)(n->getValue("Radius"));
 	const Color *color = (const Color *)(n->getValue("Color"));
 
-	cairo_t *c = ((GtkView *)canvas)->canvas->getCairoContext();
-
-	double angle1 = 0;
-	double angle2 = 2 * M_PI;
-
-	// set the color of the point
-	cairo_set_source_rgba(c,
-			color->getRed(),
-			color->getGreen(),
-			color->getBlue(),
-			color->getAlpha());
-	// move to coord in plane
-	cairo_move_to(c, p->getX(), p->getY());
-	// draw the point
-	cairo_arc(c, p->getX(), p->getY(), r->getDistance(), angle1, angle2);
-	cairo_fill_preserve(c);
-	// display the point
-	cairo_stroke(c);
+    cout << "Point at (" << p->getX() << ", " << p->getY() << ")" << endl;
 }
 
 bool PointType::boundingBox(View *canvas, const Node *n,

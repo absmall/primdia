@@ -2,8 +2,10 @@
 #include <Type.h>
 #include <Value.h>
 #include <Point2D.h>
-#include <ArcClass.h>
+#include <ArcType.h>
 #include <ConstraintSet.h>
+
+static ArcType instance;
 
 ArcClass::ArcClass() : Primitive("ArcPrimitive")
 {

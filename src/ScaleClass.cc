@@ -3,7 +3,6 @@
 #include <Point2D.h>
 #include <Distance.h>
 #include <ScaleType.h>
-#include <ScaleClass.h>
 #include <ConstraintSet.h>
 
 static ScaleType instance;

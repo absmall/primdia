@@ -3,10 +3,12 @@
 #include <Type.h>
 #include <Label.h>
 #include <Point2D.h>
-#include <TextClass.h>
+#include <TextType.h>
 #include <ConstraintSet.h>
 
 using namespace std;
+
+static TextType instance;
 
 TextClass::TextClass() : Primitive("TextPrimitive")
 {

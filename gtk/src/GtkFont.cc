@@ -4,9 +4,19 @@
 #include <Binding.h>
 #include <GtkView.h>
 #include <Document.h>
-#include <GtkFontType.h>
+#include <FontType.h>
 
-static GtkFontType instance;
+class GtkFontType : public FontType
+{
+public:
+	/**
+	 * Get a value from the user
+	 * @param v A view to be used in some
+	 *          way to retrieve a value.
+	 * @param b A binding to initialize with the value.
+	 */
+	void input(View *v, Binding *b) const;
+} static instance;
 
 void GtkFontType::input(View *v, Binding *b) const
 {
