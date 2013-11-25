@@ -4,6 +4,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+#include <Tool.h>
 #include <Primitive.h>
 
 using namespace std;
@@ -32,6 +33,9 @@ bool help(char *args)
     for(i = 0; i < sizeof(commands)/sizeof(command); i ++ ) {
         printf("%s\n", commands[i]);
     }
+    for(std::map<std::string, Tool *>::iterator i = Tool::begin(); i != Tool::end(); i ++ ) {
+        printf("%s\n", i->first.c_str());
+    }
     return true;
 }
 
@@ -48,6 +52,9 @@ bool process_command(char *command)
 			return commands[ i ].parser( command + length );
 		}
 	}
+
+    for(std::map<std::string, Tool *>::iterator i = Tool::begin(); i != Tool::end(); i ++ ) {
+    }
 
 	// Command not found
 	printf("Unknown command: %s\n", command);
@@ -88,6 +95,7 @@ int main(int argc, char *argv[])
 	try
 	{
 		Primitive::InitializeAll();
+        Tool::Init();
 
 		// Enter reading loop
 		process_commands();
