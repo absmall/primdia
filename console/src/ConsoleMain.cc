@@ -60,7 +60,7 @@ void process_commands()
 	bool done = false;
 	char *response;
 	while( !done ) {
-		response = readline("primdia>");
+		response = readline("primdia> ");
 		if( response ) {
 			if (process_command (response)) {
                 if( *response ) {

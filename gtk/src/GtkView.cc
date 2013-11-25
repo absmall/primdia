@@ -8,7 +8,7 @@
 #include <Type.h>
 #include <Value.h>
 #include <Binding.h>
-#include <GtkTool.h>
+#include <Tool.h>
 #include <GtkUtil.h>
 #include <GtkInit.h>
 #include <GtkView.h>
@@ -441,7 +441,7 @@ void switch_view(GtkMenuItem *menuitem, gpointer user_data)
 
 gboolean GtkView::create_event(GtkToolButton *widget, gpointer data)
 {
-	GtkTool *gtkt = (GtkTool *)data;
+	Tool *gtkt = (Tool *)data;
 	GtkView *view = (GtkView *)g_object_get_data(G_OBJECT(widget), "view");
 	view->document->addNode(gtkt);
 
@@ -540,7 +540,7 @@ GtkView::~GtkView()
 	windowCount--;
 	if (windowCount == 0)
 	{
-		GtkTool::Clear();
+		Tool::Clear();
 		gtk_main_quit();
 	}
 }
@@ -797,7 +797,7 @@ void GtkView::initialize()
 
 	for(map<std::string,Tool *>::iterator i = Tool::begin(); i != Tool::end(); i++)
 	{
-		GtkTool *gtkt = static_cast<GtkTool *>(i->second);
+		Tool *gtkt = static_cast<Tool *>(i->second);
 		GtkWidget *icon = gtk_image_new_from_file(gtkt->icon.c_str());
 		gtk_widget_show(GTK_WIDGET(icon));
 		GtkToolItem *toolitem = gtk_tool_button_new(icon, NULL);
@@ -992,14 +992,14 @@ void GtkView::update(int command, Attribute *attribute, Interface *node, Binding
 		break;
 		case GtkDocument::ReloadTool:
 		{
-			GtkTool::Clear();
-			GtkTool::Init();
+			Tool::Clear();
+			Tool::Init();
 
 			gtk_container_foreach(GTK_CONTAINER(toolbar), clear_toolbar, this);
 
 			for(map<std::string,Tool *>::iterator i = Tool::begin(); i != Tool::end(); i++)
 			{
-				GtkTool *gtkt = static_cast<GtkTool *>(i->second);
+				Tool *gtkt = static_cast<Tool *>(i->second);
 				GtkWidget *icon = gtk_image_new_from_file(gtkt->icon.c_str());
 				gtk_widget_show(GTK_WIDGET(icon));
 				GtkToolItem *toolitem = gtk_tool_button_new(icon, NULL);

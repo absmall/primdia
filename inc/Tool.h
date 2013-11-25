@@ -10,7 +10,7 @@
 class Tool
 {
 public:
-	Tool(const std::string &filename);
+	Tool(const std::string &basename, const std::string &filename);
 
 	static std::map<std::string, Tool *>::iterator begin();
 	static std::map<std::string, Tool *>::iterator end();
@@ -22,6 +22,8 @@ public:
 	static Tool *getTool(const std::string &name);
 
 	static void Clear(void);
+
+    static void Init(void);
 
 	struct NodeData
 	{
@@ -39,12 +41,15 @@ public:
 	};
 
 	std::string name;
+	std::string icon;
 	std::string description;
 	std::list<NodeData> nodes;
 	std::list<NodeData> aggregates;
 	std::list<NodeData> interface;
 	std::list<BindingData> bindings;
 	static std::map<std::string, Tool *> tools;
+private:
+	static void processDirectory(std::string dir);
 };
 
 #endif /* __TOOL_H__ */

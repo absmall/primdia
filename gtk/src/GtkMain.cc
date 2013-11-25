@@ -2,7 +2,7 @@
 #include <iostream>
 #include <gio/gio.h>
 
-#include <GtkTool.h>
+#include <Tool.h>
 #include <GtkView.h>
 #include <Primitive.h>
 
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	gtk_init(&argc, &argv);
     client = g_settings_new("org.dyndns.smeagle.primdia");
 
-	GtkTool::Init();
+	Tool::Init();
 
 	try
 	{
