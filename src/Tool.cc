@@ -19,12 +19,11 @@
 
 using namespace std;
 
-std::map<std::string, Tool *> Tool::tools;
-
 static stack<std::string> tags;
 static Tool::BindingData b;
 static int attribute_count;
 
+// Note - not re-entrant. Should fix that sometime
 static void process_start(GMarkupParseContext *context,
                           const gchar *element_name,
                           const gchar **attribute_names,
@@ -182,23 +181,12 @@ Tool::Tool(const std::string &basename, const std::string &filename)
 		}
 
 		fb.close();
-		tools[name] = this;
 	} catch (ios_base::failure e) {
 		// Read error occured
 		cout << "IO error occured" << endl;
 	} catch (const std::runtime_error &e) {
 		cout << "Runtime error parsing " << filename << ": " << e.what() << std::endl;
 	}
-}
-
-std::map<std::string, Tool *>::iterator Tool::begin()
-{
-	return tools.begin();
-}
-
-std::map<std::string, Tool *>::iterator Tool::end()
-{
-	return tools.end();
 }
 
 bool Tool::save(const std::string &filename, const Document *doc)
@@ -340,55 +328,4 @@ bool Tool::save(const std::string &filename, const Document *doc)
 const std::string &Tool::getName()
 {
 	return name;
-}
-
-Tool *Tool::getTool(const std::string &name)
-{
-    map<std::string, Tool *>::iterator iter;
-    iter = tools.find(name);
-    if( iter == tools.end() ) return NULL;
-
-	return iter->second;
-}
-
-void Tool::Clear(void)
-{
-	foreach(i, tools)
-	{
-		delete i->second;
-	}
-	tools.clear();
-}
-
-void Tool::processDirectory(std::string dir)
-{
-	struct dirent *de;
-	DIR *td = opendir((dir+std::string("tools/")).c_str());
-	if (td == NULL) return;
-
-	while((de = readdir(td)) != NULL)
-	{
-		if (de->d_name[0] != '.')
-		{
-			new Tool(std::string(dir), std::string(de->d_name));
-		}
-	}
-
-	closedir(td);
-}
-
-void Tool::Init()
-{
-	// Load tools
-	try
-	{
-		const gchar *const *dirs = g_get_system_data_dirs();
-		for(int i = 0; dirs[i]; i++)
-		{
-			processDirectory(std::string(dirs[i])+std::string("/")+std::string(PACKAGE_NAME)+std::string("/"));
-		}
-		processDirectory(std::string(g_get_user_data_dir())+std::string("/applications/")+std::string(PACKAGE_NAME)+std::string("/"));
-	} catch(std::string message) {
-		std::cout << message << std::endl;
-	}
 }

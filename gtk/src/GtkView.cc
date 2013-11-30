@@ -540,7 +540,7 @@ GtkView::~GtkView()
 	windowCount--;
 	if (windowCount == 0)
 	{
-		Tool::Clear();
+		document->Clear();
 		gtk_main_quit();
 	}
 }
@@ -795,7 +795,7 @@ void GtkView::initialize()
 	gtk_widget_show(toolbar);
 	gtk_container_add(GTK_CONTAINER (hbox1), toolbar);
 
-	for(map<std::string,Tool *>::iterator i = Tool::begin(); i != Tool::end(); i++)
+	for(map<std::string,Tool *>::iterator i = document->toolBegin(); i != document->toolEnd(); i++)
 	{
 		Tool *gtkt = static_cast<Tool *>(i->second);
 		GtkWidget *icon = gtk_image_new_from_file(gtkt->icon.c_str());
@@ -903,8 +903,6 @@ void GtkView::initialize()
 	g_signal_connect (G_OBJECT (window), "destroy", G_CALLBACK (destroy), (void *)this);
 
 	gtk_widget_show(window);
-
-	document->registerView(this);
 }
 
 void GtkView::updateWindowList()
@@ -992,12 +990,12 @@ void GtkView::update(int command, Attribute *attribute, Interface *node, Binding
 		break;
 		case GtkDocument::ReloadTool:
 		{
-			Tool::Clear();
-			Tool::Init();
+			document->Clear();
+			document->Init();
 
 			gtk_container_foreach(GTK_CONTAINER(toolbar), clear_toolbar, this);
 
-			for(map<std::string,Tool *>::iterator i = Tool::begin(); i != Tool::end(); i++)
+			for(map<std::string,Tool *>::iterator i = document->toolBegin(); i != document->toolEnd(); i++)
 			{
 				Tool *gtkt = static_cast<Tool *>(i->second);
 				GtkWidget *icon = gtk_image_new_from_file(gtkt->icon.c_str());

@@ -147,6 +147,12 @@ public:
 	 */
 	bool isModified(void) const;
 
+    void Init(void);
+	void Clear(void);
+	Tool *getTool(const std::string &name);
+
+	std::map<std::string, Tool *>::iterator toolBegin();
+	std::map<std::string, Tool *>::iterator toolEnd();
 private:
 	static void updateDocumentList();
 	std::string makeTemporaryDocumentName();
@@ -157,7 +163,9 @@ private:
 	std::string name;
 	static int newDocuments;
 	static std::list<Document *> documentList;
-	/**
+	void processDirectory(std::string dir);
+    std::map<std::string, Tool *> tools;
+    /**
 	 * This stores all the interfaces instantiated into the document.
 	 */
 	std::set<Interface *> nodes;

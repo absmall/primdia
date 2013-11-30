@@ -30,8 +30,6 @@ int main(int argc, char *argv[])
 	gtk_init(&argc, &argv);
     client = g_settings_new("org.dyndns.smeagle.primdia");
 
-	Tool::Init();
-
 	try
 	{
 		new GtkView();

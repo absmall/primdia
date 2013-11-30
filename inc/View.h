@@ -4,6 +4,7 @@
 #include <config/common.h>
 
 #include <set>
+#include <map>
 
 class View
 {

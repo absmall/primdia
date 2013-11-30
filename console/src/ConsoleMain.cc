@@ -5,9 +5,14 @@
 #include <readline/history.h>
 
 #include <Tool.h>
+#include <Document.h>
 #include <Primitive.h>
+#include <ConsoleView.h>
 
 using namespace std;
+
+Document *d;
+ConsoleView *v;
 
 bool help(char *args);
 
@@ -33,7 +38,7 @@ bool help(char *args)
     for(i = 0; i < sizeof(commands)/sizeof(command); i ++ ) {
         printf("%s\n", commands[i]);
     }
-    for(std::map<std::string, Tool *>::iterator i = Tool::begin(); i != Tool::end(); i ++ ) {
+            for(std::map<std::string, Tool *>::iterator i = d->toolBegin(); i != d->toolEnd(); i ++ ) {
         printf("%s\n", i->first.c_str());
     }
     return true;
@@ -53,7 +58,7 @@ bool process_command(char *command)
 		}
 	}
 
-    for(std::map<std::string, Tool *>::iterator i = Tool::begin(); i != Tool::end(); i ++ ) {
+    for(std::map<std::string, Tool *>::iterator i = d->toolBegin(); i != d->toolEnd(); i ++ ) {
     }
 
 	// Command not found
@@ -91,17 +96,20 @@ int main(int argc, char *argv[])
 	textdomain (PACKAGE_NAME);
 	bindtextdomain (PACKAGE_NAME, LOCALEDIR);
 #endif
+    d = new Document();
+    v = new ConsoleView(d);
 
 	try
 	{
 		Primitive::InitializeAll();
-        Tool::Init();
 
 		// Enter reading loop
 		process_commands();
 	} catch(string message) {
 		cout << message << endl;
 	}
+
+    delete v;
 
 	return 0;
 }

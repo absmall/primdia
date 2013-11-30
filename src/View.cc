@@ -9,12 +9,14 @@ unsigned int View::newViews = 1;
 View::View()
 {
 	document = new Document;
+    document->registerView(this);
 	name = makeTemporaryViewName();
 }
 
 View::View(Document *doc)
 {
 	this->document = doc;
+    doc->registerView(this);
 	name = makeTemporaryViewName();
 }
 

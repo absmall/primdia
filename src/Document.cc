@@ -1,4 +1,6 @@
 #include <list>
+#include <sys/types.h>
+#include <dirent.h>
 #include <algorithm>
 #include <sstream>
 #include <libxml++/libxml++.h>
@@ -29,6 +31,7 @@ Document::Document()
 	modified = false;
 	documentList.push_back(this);
 	name = makeTemporaryDocumentName();
+    Init();
 }
 
 Document::~Document()
@@ -120,7 +123,7 @@ void Document::load(const std::string &name)
                             } while(reader.move_to_next_attribute());
                             reader.move_to_element();
                             if( name != "" && type != "" ) {
-                                Tool *tool = Tool::getTool(type);
+                                Tool *tool = getTool(type);
                                 if( tool ) {
                                     nodes[id] = addNode(tool, name);
                                 }
@@ -476,4 +479,65 @@ void Document::unregisterNode(Interface *n)
 {
 	nodes.erase(n);
 	update(RemoveNode, NULL, n, NULL);
+}
+
+std::map<std::string, Tool *>::iterator Document::toolBegin()
+{
+	return tools.begin();
+}
+
+std::map<std::string, Tool *>::iterator Document::toolEnd()
+{
+	return tools.end();
+}
+
+void Document::processDirectory(std::string dir)
+{
+	struct dirent *de;
+	DIR *td = opendir((dir+std::string("tools/")).c_str());
+	if (td == NULL) return;
+
+	while((de = readdir(td)) != NULL)
+	{
+		if (de->d_name[0] != '.')
+		{
+			tools[de->d_name] = new Tool(std::string(dir), std::string(de->d_name));
+		}
+	}
+
+	closedir(td);
+}
+
+void Document::Init()
+{
+	// Load tools
+	try
+	{
+		const gchar *const *dirs = g_get_system_data_dirs();
+		for(int i = 0; dirs[i]; i++)
+		{
+			processDirectory(std::string(dirs[i])+std::string("/")+std::string(PACKAGE_NAME)+std::string("/"));
+		}
+		processDirectory(std::string(g_get_user_data_dir())+std::string("/applications/")+std::string(PACKAGE_NAME)+std::string("/"));
+	} catch(std::string message) {
+		std::cout << message << std::endl;
+	}
+}
+
+void Document::Clear(void)
+{
+	foreach(i, tools)
+	{
+		delete i->second;
+	}
+	tools.clear();
+}
+
+Tool *Document::getTool(const std::string &name)
+{
+    map<std::string, Tool *>::iterator iter;
+    iter = tools.find(name);
+    if( iter == tools.end() ) return NULL;
+
+	return iter->second;
 }
