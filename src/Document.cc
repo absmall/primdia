@@ -41,6 +41,10 @@ Document::~Document()
 		delete *nodes.begin();
 	}
 
+    foreach(i, tools) {
+        delete i->second;
+    }
+
 	documentList.erase(find(documentList.begin(), documentList.end(), this));
 }
 
